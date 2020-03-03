@@ -196,6 +196,9 @@ public struct YPConfigLibrary {
     /// Allow to skip the selections gallery when selecting the multiple media items. Defaults to false.
     public var skipSelectionsGallery = false
     
+    /// Allow to deselect items with single tap. Default to false
+    public var singleTapToDeselect = false
+    
     /// Allow to preselected media items
     public var preselectedItems: [YPMediaItem]?
 }
