@@ -66,9 +66,14 @@ public class YPSelectionsGalleryVC: UIViewController, YPSelectionsGalleryCellDel
     public func selectionsGalleryCellDidTapRemove(cell: YPSelectionsGalleryCell) {
         if let indexPath = v.collectionView.indexPath(for: cell) {
             items.remove(at: indexPath.row)
+            let shouldPop = items.isEmpty
             v.collectionView.performBatchUpdates({
                 v.collectionView.deleteItems(at: [indexPath])
-            }, completion: { _ in })
+            }, completion: { [weak self] _ in
+                if shouldPop {
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            })
         }
     }
 }
