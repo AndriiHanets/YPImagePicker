@@ -63,7 +63,6 @@ class YPAlbumsManager {
             })
         }
         
-        let recentIndex = albums.firstIndex(where: { $0.title.lowercased() == "recents" })
         let favouritesIndex = albums.firstIndex(where: { $0.title.lowercased() == "favourites" || $0.title.lowercased() == "favorites" })
         favouritesIndex.map {
             let album = albums[$0]
@@ -71,6 +70,7 @@ class YPAlbumsManager {
             albums.insert(album, at: 0)
         }
         
+        let recentIndex = albums.firstIndex(where: { $0.title.lowercased() == "recents" })
         recentIndex.map {
             let album = albums[$0]
             albums.remove(at: $0);
