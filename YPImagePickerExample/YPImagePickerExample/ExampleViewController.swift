@@ -64,10 +64,7 @@ class ExampleViewController: UIViewController {
     // MARK: - Configuration
     @objc
     func showPicker() {
-<<<<<<< HEAD
-        
         let picker = ImagePickerProvider.getConfiguredImagePicker(maxNumberOfItems: 100)
-=======
 
         var config = YPImagePickerConfiguration()
 
@@ -184,9 +181,6 @@ class ExampleViewController: UIViewController {
 		//config.fonts.rightBarButtonFont = UIFont.systemFont(ofSize: 22.0, weight: .bold)
 		//config.fonts.navigationBarTitleFont = UIFont.systemFont(ofSize: 22.0, weight: .heavy)
 		//config.fonts.leftBarButtonFont = UIFont.systemFont(ofSize: 22.0, weight: .heavy)
-
-        let picker = YPImagePicker(configuration: config)
->>>>>>> 45352de8f798b947e0530edff2ddd24ae236a0ec
 
         picker.imagePickerDelegate = self
 
