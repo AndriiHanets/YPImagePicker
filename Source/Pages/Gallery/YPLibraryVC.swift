@@ -61,7 +61,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
         registerForTapOnPreview()
         refreshMediaRequest()
 
-        v.assetViewContainer.multipleSelectionButton.isHidden = !(YPConfig.library.maxNumberOfItems > 1)
+        v.assetViewContainer.multipleSelectionButton.isHidden = true //!(YPConfig.library.maxNumberOfItems > 1)
         v.maxNumberWarningLabel.text = String(format: YPConfig.wordings.warningMaxItemsLimit,
 											  YPConfig.library.maxNumberOfItems)
         
@@ -193,7 +193,10 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             }
         } else {
             selection.removeAll()
-            guard !multipleSelectionEnabled && YPConfig.library.preSelectItemOnMultipleSelection else { return }
+            guard !YPConfig.library.preSelectItemOnMultipleSelection else {
+                addToSelection(indexPath: IndexPath(row: -1, section: 0))
+                return
+            }
             addToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0))
         }
         
