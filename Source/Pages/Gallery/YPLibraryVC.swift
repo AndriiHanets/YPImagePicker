@@ -190,10 +190,11 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
                                        scrollViewZoomScale: v.assetZoomableView!.zoomScale,
                                        assetIdentifier: asset.localIdentifier)
                 ]
+            } else if !YPConfig.library.preSelectItemOnMultipleSelection {
+                selection.removeAll()
             }
         } else {
             selection.removeAll()
-            guard !YPConfig.library.preSelectItemOnMultipleSelection else { return }
             addToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0))
         }
         
