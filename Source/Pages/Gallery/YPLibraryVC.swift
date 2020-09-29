@@ -193,10 +193,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             }
         } else {
             selection.removeAll()
-            guard !YPConfig.library.preSelectItemOnMultipleSelection else {
-                addToSelection(indexPath: IndexPath(row: -1, section: 0))
-                return
-            }
+            guard !YPConfig.library.preSelectItemOnMultipleSelection else { return }
             addToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0))
         }
         
