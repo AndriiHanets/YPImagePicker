@@ -28,8 +28,8 @@ public class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
     private var imageGenerator: AVAssetImageGenerator?
     private var isFromSelectionVC = false
     
-    var didSave: ((YPMediaItem) -> Void)?
-    var didCancel: (() -> Void)?
+    public var didSave: ((YPMediaItem) -> Void)?
+    public var didCancel: (() -> Void)?
 
     /// Designated initializer
     public class func initWith(video: YPMediaVideo,
