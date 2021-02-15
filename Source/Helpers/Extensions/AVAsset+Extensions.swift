@@ -7,7 +7,7 @@
 //
 
 import AVFoundation
-import Photos
+
 // MARK: Trim
 
 extension AVAsset {
@@ -44,7 +44,6 @@ extension AVAsset {
     func export(to destination: URL,
                 videoComposition: AVVideoComposition? = nil,
                 removeOldFile: Bool = false,
-                fileType: AVFileType,
                 completion: @escaping (_ exportSession: AVAssetExportSession) -> Void) -> AVAssetExportSession? {
         guard let exportSession = AVAssetExportSession(asset: self, presetName: YPConfig.video.compression) else {
             print("YPImagePicker -> AVAsset -> Could not create an export session.")
@@ -52,7 +51,7 @@ extension AVAsset {
         }
         
         exportSession.outputURL = destination
-        exportSession.outputFileType = fileType
+        exportSession.outputFileType = YPConfig.video.fileType
         exportSession.shouldOptimizeForNetworkUse = true
         exportSession.videoComposition = videoComposition
         
