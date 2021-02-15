@@ -123,6 +123,7 @@ public class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
 
         do {
             let asset = AVURLAsset(url: inputVideo.url)
+            let fileExtension = asset.url.absoluteString.components(separatedBy: ".").last ?? YPConfig.video.fileType.fileExtension
             let trimmedAsset = try asset
                 .assetByTrimming(startTime: trimmerView.startTime ?? CMTime.zero,
                                  endTime: trimmerView.endTime ?? inputAsset.duration)
@@ -130,9 +131,9 @@ public class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
             // Looks like file:///private/var/mobile/Containers/Data/Application
             // /FAD486B4-784D-4397-B00C-AD0EFFB45F52/tmp/8A2B410A-BD34-4E3F-8CB5-A548A946C1F1.mov
             let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory())
-                .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
+                .appendingUniquePathComponent(pathExtension: fileExtension)
             
-            _ = trimmedAsset.export(to: destinationURL) { [weak self] session in
+            _ = trimmedAsset.export(to: destinationURL, fileType: AVFileType(fileExtension)) { [weak self] session in
                 switch session.status {
                 case .completed:
                     DispatchQueue.main.async {

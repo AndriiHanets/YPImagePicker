@@ -92,6 +92,7 @@ class LibraryMediaManager {
             do {
                 guard let asset = asset else { print("⚠️ PHCachingImageManager >>> Don't have the asset"); return }
                 
+                let fileExtension = videoAsset.getVideoExtension() ?? YPConfig.video.fileType.fileExtension
                 let assetComposition = AVMutableComposition()
                 let assetMaxDuration = self.getMaxVideoDuration(between: duration, andAssetDuration: asset.duration)
                 let trackTimeRange = CMTimeRangeMake(start: CMTime.zero, duration: assetMaxDuration)
@@ -139,11 +140,12 @@ class LibraryMediaManager {
                 // 5. Configuring export session
                 
                 let fileURL = URL(fileURLWithPath: NSTemporaryDirectory())
-                    .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
+                    .appendingUniquePathComponent(pathExtension: fileExtension)
                 let exportSession = assetComposition
                     .export(to: fileURL,
                             videoComposition: videoComposition,
-                            removeOldFile: true) { [weak self] session in
+                            removeOldFile: true,
+                            fileType: AVFileType(fileExtension)) { [weak self] session in
                                 DispatchQueue.main.async {
                                     switch session.status {
                                     case .completed:

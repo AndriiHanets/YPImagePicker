@@ -57,7 +57,8 @@ class YPVideoProcessor {
         let outputPath = makeVideoPathURL(temporaryFolder: true, fileName: "squaredVideoFromCamera")
         
         // input file
-        let asset = AVAsset.init(url: filePath)
+        let asset = AVAsset(url: filePath)
+        let fileExtension = filePath.absoluteString.components(separatedBy: ".").last ?? YPConfig.video.fileType.fileExtension
         let composition = AVMutableComposition.init()
         composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
         
@@ -93,7 +94,7 @@ class YPVideoProcessor {
         videoComposition.instructions = [instruction]
         
         // exporter
-        _ = asset.export(to: outputPath, videoComposition: videoComposition, removeOldFile: true) { exportSession in
+        _ = asset.export(to: outputPath, videoComposition: videoComposition, removeOldFile: true, fileType: AVFileType(fileExtension)) { exportSession in
             DispatchQueue.main.async {
                 switch exportSession.status {
                 case .completed:
