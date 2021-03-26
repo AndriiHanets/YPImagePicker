@@ -140,6 +140,7 @@ public class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
                             let resultVideo = YPMediaVideo(thumbnail: coverImage,
 														   videoURL: destinationURL,
 														   asset: self?.inputVideo.asset)
+                            (self?.inputVideo.url).map { try? FileManager.default.removeItem(at: $0) }
                             didSave(YPMediaItem.video(v: resultVideo))
                             self?.setupRightBarButtonItem()
                         } else {
