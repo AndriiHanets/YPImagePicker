@@ -20,6 +20,7 @@
 "YPImagePickerVideoTooLong" = "Selecteer een video korter dan %@ seconden";
 "YPImagePickerVideoTooShort" = "Video moet %@ seconden of langer zijn";
 "YPImagePickerWarningItemsLimit" = "De limiet is %d foto's of video's";
+"YPImagePickerWarningItemLimit" = "De limiet is %d foto of video";
 "YPImagePickerWarningVideosLimit" = "De limiet is %d video's";
 "YPImagePickerWarningPhotosLimit" = "De limiet is %d foto's";
 "YPImagePickerWarningVideoLimit" = "De limiet is %d video";

@@ -20,6 +20,7 @@
 "YPImagePickerVideoTooLong" = "La durée d'une vidéo ne doit pas dépasser %@ secondes";
 "YPImagePickerVideoTooShort" = "La vidéo doit durer %@ secondes ou plus";
 "YPImagePickerWarningItemsLimit" = "La limite est de %d photos ou vidéos";
+"YPImagePickerWarningItemLimit" = "La limite est de %d photo ou vidéo";
 "YPImagePickerWarningVideosLimit" = "La limite est de %d vidéos";
 "YPImagePickerWarningPhotosLimit" = "La limite est de %d photos";
 "YPImagePickerWarningVideoLimit" = "La limite est de %d vidéo";

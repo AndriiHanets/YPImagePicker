@@ -20,6 +20,7 @@
 "YPImagePickerVideoTooLong" = "ជ្រើសយកវីដេអូដែលខ្លីជាង%@ វិនាទី ";
 "YPImagePickerVideoTooShort" = "វីដេអូត្រូវមានរយៈពេលយ៉ាងហោចណាស់%@ វិនាទី";
 "YPImagePickerWarningItemsLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
+"YPImagePickerWarningItemLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
 "YPImagePickerWarningVideosLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
 "YPImagePickerWarningPhotosLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
 "YPImagePickerWarningVideoLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";

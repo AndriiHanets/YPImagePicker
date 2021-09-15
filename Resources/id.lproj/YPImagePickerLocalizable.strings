@@ -20,6 +20,7 @@
 "YPImagePickerVideoTooLong" = "Pilih durasi video kurang dari %@ detik";
 "YPImagePickerVideoTooShort" = " Durasi video setidaknya %@ detik";
 "YPImagePickerWarningItemsLimit" = "Hanya diperbolehkan %d foto atau video";
+"YPImagePickerWarningItemLimit" = "Hanya diperbolehkan %d foto atau video";
 "YPImagePickerWarningVideosLimit" = "Hanya diperbolehkan %d video";
 "YPImagePickerWarningPhotosLimit" = "Hanya diperbolehkan %d foto";
 "YPImagePickerWarningVideoLimit" = "Hanya diperbolehkan %d video";

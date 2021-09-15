@@ -20,6 +20,7 @@
 "YPImagePickerVideoTooLong" = "Изберете видео по-късо от %@ секунди";
 "YPImagePickerVideoTooShort" = "Видеото трябва да бъде поне %@ секунди";
 "YPImagePickerWarningItemsLimit" = "Лимитът е %d снимки или клипове";
+"YPImagePickerWarningItemLimit" = "Лимитът е %d снимка или клипове";
 "YPImagePickerWarningVideosLimit" = "Лимитът е %d клипове";
 "YPImagePickerWarningPhotosLimit" = "Лимитът е %d снимки";
 "YPImagePickerWarningVideoLimit" = "Лимитът е %d клипове";

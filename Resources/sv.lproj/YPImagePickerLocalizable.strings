@@ -20,6 +20,7 @@
 "YPImagePickerVideoTooLong" = "Välj en video som är kortare än %@ sekunder";
 "YPImagePickerVideoTooShort" = "Videon måste vara minst %@ sekunder";
 "YPImagePickerWarningItemsLimit" = "Välj maximalt %d bilder/videor";
+"YPImagePickerWarningItemLimit" = "Välj maximalt %d bilder/videor";
 "YPImagePickerWarningVideosLimit" = "Välj maximalt %d videor";
 "YPImagePickerWarningPhotosLimit" = "Välj maximalt %d bilder";
 "YPImagePickerWarningVideoLimit" = "Välj maximalt %d videor";
