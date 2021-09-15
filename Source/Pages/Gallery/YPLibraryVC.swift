@@ -70,9 +70,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
                 ? YPConfig.wordings.warningMaxVideoLimit
                 : YPConfig.wordings.warningMaxVideosLimit
         case .photoAndVideo:
-            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
-                ? YPConfig.wordings.warningMaxItemLimit
-                : YPConfig.wordings.warningMaxItemsLimit
+            maxTimesLimitFormat = YPConfig.wordings.warningMaxItemsLimit
         }
         
         v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat,
