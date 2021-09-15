@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "الحد المسموح هوه %d صورة او فيديو";
 "YPImagePickerWarningVideosLimit" = "الحد المسموح هوه %d صورة او فيديو";
 "YPImagePickerWarningPhotosLimit" = "الحد المسموح هوه %d صورة او فيديو";
+"YPImagePickerWarningVideoLimit" = "الحد المسموح هوه %d صورة او فيديو";
+"YPImagePickerWarningPhotoLimit" = "الحد المسموح هوه %d صورة او فيديو";

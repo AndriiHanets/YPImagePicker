@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Välj maximalt %d bilder/videor";
 "YPImagePickerWarningVideosLimit" = "Välj maximalt %d videor";
 "YPImagePickerWarningPhotosLimit" = "Välj maximalt %d bilder";
+"YPImagePickerWarningVideoLimit" = "Välj maximalt %d videor";
+"YPImagePickerWarningPhotoLimit" = "Välj maximalt %d bilder";

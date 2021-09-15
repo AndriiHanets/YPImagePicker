@@ -20,5 +20,7 @@
 "YPImagePickerVideoTooLong" = "Escolha um vídeo menor que %@ segundos";
 "YPImagePickerVideoTooShort" = "O vídeo deve ter no mínimo %@ segundos de duração";
 "YPImagePickerWarningItemsLimit" = "O limite é de %d fotos ou vídeos";
-"YPImagePickerWarningVideosLimit" = "Максимум %d видео";
-"YPImagePickerWarningPhotosLimit" = "Максимум %d фото";
+"YPImagePickerWarningVideosLimit" = "O limite é de %d vídeos";
+"YPImagePickerWarningPhotosLimit" = "O limite é de %d fotos";
+"YPImagePickerWarningVideoLimit" = "O limite é de %d vídeo";
+"YPImagePickerWarningPhotoLimit" = "O limite é de %d foto";

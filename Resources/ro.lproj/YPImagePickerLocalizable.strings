@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Limita este de %d fotografii sau videoclipuri";
 "YPImagePickerWarningVideosLimit" = "Limita este de %d videoclipuri";
 "YPImagePickerWarningPhotosLimit" = "Limita este de %d fotografii";
+"YPImagePickerWarningVideoLimit" = "Limita este de %d videoclipuri";
+"YPImagePickerWarningPhotoLimit" = "Limita este de %d fotografii";

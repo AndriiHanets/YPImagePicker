@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Die Obergrenze liegt bei %d Fotos oder Videos";
 "YPImagePickerWarningVideosLimit" = "Die Obergrenze liegt bei %d Videos";
 "YPImagePickerWarningPhotosLimit" = "Die Obergrenze liegt bei %d Fotos";
+"YPImagePickerWarningVideoLimit" = "Die Obergrenze liegt bei %d Video";
+"YPImagePickerWarningPhotoLimit" = "Die Obergrenze liegt bei %d Foto";

@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "La limite est de %d photos ou vidéos";
 "YPImagePickerWarningVideosLimit" = "La limite est de %d vidéos";
 "YPImagePickerWarningPhotosLimit" = "La limite est de %d photos";
+"YPImagePickerWarningVideoLimit" = "La limite est de %d vidéo";
+"YPImagePickerWarningPhotoLimit" = "La limite est de %d photo";

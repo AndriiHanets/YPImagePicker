@@ -56,21 +56,27 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
         panGestureHelper.registerForPanGesture(on: v)
         registerForTapOnPreview()
         refreshMediaRequest()
-
+        
         v.assetViewContainer.multipleSelectionButton.isHidden = true //!(YPConfig.library.maxNumberOfItems > 1)
         
         let maxTimesLimitFormat: String
         switch YPConfig.library.mediaType {
         case .photo:
-            maxTimesLimitFormat = YPConfig.wordings.warningMaxPhotosLimit
+            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                ? YPConfig.wordings.warningMaxPhotoLimit
+                : YPConfig.wordings.warningMaxPhotosLimit
         case .video:
-            maxTimesLimitFormat = YPConfig.wordings.warningMaxVideosLimit
+            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                ? YPConfig.wordings.warningMaxVideoLimit
+                : YPConfig.wordings.warningMaxVideosLimit
         case .photoAndVideo:
-            maxTimesLimitFormat = YPConfig.wordings.warningMaxItemsLimit
+            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                ? YPConfig.wordings.warningMaxItemLimit
+                : YPConfig.wordings.warningMaxItemsLimit
         }
         
         v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat,
-											  YPConfig.library.maxNumberOfItems)
+                                              YPConfig.library.maxNumberOfItems)
         
         if let preselectedItems = YPConfig.library.preselectedItems, !preselectedItems.isEmpty {
             selection = preselectedItems.compactMap { item -> YPLibrarySelection? in

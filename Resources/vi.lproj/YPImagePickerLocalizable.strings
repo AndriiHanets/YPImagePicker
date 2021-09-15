@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Tổng số ảnh và video được chọn không được vượt quá %d";
 "YPImagePickerWarningVideosLimit" = "Tổng số ảnh và video được chọn không được vượt quá %d";
 "YPImagePickerWarningPhotosLimit" = "Tổng số ảnh và video được chọn không được vượt quá %d";
+"YPImagePickerWarningVideoLimit" = "Tổng số ảnh và video được chọn không được vượt quá %d";
+"YPImagePickerWarningPhotoLimit" = "Tổng số ảnh và video được chọn không được vượt quá %d";

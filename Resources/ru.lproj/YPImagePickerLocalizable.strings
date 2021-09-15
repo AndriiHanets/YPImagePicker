@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Максимум %d фото или видео";
 "YPImagePickerWarningVideosLimit" = "Максимум %d видео";
 "YPImagePickerWarningPhotosLimit" = "Максимум %d фото";
+"YPImagePickerWarningVideoLimit" = "Максимум %d видео";
+"YPImagePickerWarningPhotoLimit" = "Максимум %d фото";

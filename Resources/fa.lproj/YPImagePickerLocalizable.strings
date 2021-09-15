@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "محدودیت انتخاب عکس یا ویدیو %d عدد است";
 "YPImagePickerWarningVideosLimit" = "محدودیت انتخاب عکس یا ویدیو %d عدد است";
 "YPImagePickerWarningPhotosLimit" = "محدودیت انتخاب عکس یا ویدیو %d عدد است";
+"YPImagePickerWarningVideoLimit" = "محدودیت انتخاب عکس یا ویدیو %d عدد است";
+"YPImagePickerWarningPhotoLimit" = "محدودیت انتخاب عکس یا ویدیو %d عدد است";

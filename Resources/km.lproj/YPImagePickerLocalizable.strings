@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
 "YPImagePickerWarningVideosLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
 "YPImagePickerWarningPhotosLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
+"YPImagePickerWarningVideoLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";
+"YPImagePickerWarningPhotoLimit" = "ដែនកំណត់គឺ %d រូប ឬ វីដេអូ";

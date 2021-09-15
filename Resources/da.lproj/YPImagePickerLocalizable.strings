@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Grænsen er %d fotos eller videoer";
 "YPImagePickerWarningVideosLimit" = "Grænsen er %d videoer";
 "YPImagePickerWarningPhotosLimit" = "Grænsen er %d fotos";
+"YPImagePickerWarningVideoLimit" = "Grænsen er %d videoer";
+"YPImagePickerWarningPhotoLimit" = "Grænsen er %d fotos";

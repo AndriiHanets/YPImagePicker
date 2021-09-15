@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Лимитът е %d снимки или клипове";
 "YPImagePickerWarningVideosLimit" = "Лимитът е %d клипове";
 "YPImagePickerWarningPhotosLimit" = "Лимитът е %d снимки";
+"YPImagePickerWarningVideoLimit" = "Лимитът е %d клипове";
+"YPImagePickerWarningPhotoLimit" = "Лимитът е %d снимка";

@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Hanya diperbolehkan %d foto atau video";
 "YPImagePickerWarningVideosLimit" = "Hanya diperbolehkan %d video";
 "YPImagePickerWarningPhotosLimit" = "Hanya diperbolehkan %d foto";
+"YPImagePickerWarningVideoLimit" = "Hanya diperbolehkan %d video";
+"YPImagePickerWarningPhotoLimit" = "Hanya diperbolehkan %d foto";

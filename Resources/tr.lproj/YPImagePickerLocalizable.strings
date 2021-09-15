@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "Sınır %d fotoğraf veya videodur";
 "YPImagePickerWarningVideosLimit" = "Sınır %d videodur";
 "YPImagePickerWarningPhotosLimit" = "Sınır %d fotoğraf";
+"YPImagePickerWarningVideoLimit" = "Sınır %d videodur";
+"YPImagePickerWarningPhotoLimit" = "Sınır %d fotoğraf";

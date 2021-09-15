@@ -22,3 +22,5 @@
 "YPImagePickerWarningItemsLimit" = "写真と動画は最大 %d 枚選択できます";
 "YPImagePickerWarningVideosLimit" = "写真と動画は最大 %d 枚選択できます";
 "YPImagePickerWarningPhotosLimit" = "写真と動画は最大 %d 枚選択できます";
+"YPImagePickerWarningVideoLimit" = "写真と動画は最大 %d 枚選択できます";
+"YPImagePickerWarningPhotoLimit" = "写真と動画は最大 %d 枚選択できます";
