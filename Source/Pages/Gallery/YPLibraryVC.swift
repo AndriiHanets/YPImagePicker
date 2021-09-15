@@ -58,7 +58,18 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
         refreshMediaRequest()
 
         v.assetViewContainer.multipleSelectionButton.isHidden = true //!(YPConfig.library.maxNumberOfItems > 1)
-        v.maxNumberWarningLabel.text = String(format: YPConfig.wordings.warningMaxItemsLimit,
+        
+        let maxTimesLimitFormat: String
+        switch YPConfig.library.mediaType {
+        case .photo:
+            maxTimesLimitFormat = YPConfig.wordings.warningMaxPhotosLimit
+        case .video:
+            maxTimesLimitFormat = YPConfig.wordings.warningMaxVideosLimit
+        case .photoAndVideo:
+            maxTimesLimitFormat = YPConfig.wordings.warningMaxItemsLimit
+        }
+        
+        v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat,
 											  YPConfig.library.maxNumberOfItems)
         
         if let preselectedItems = YPConfig.library.preselectedItems, !preselectedItems.isEmpty {
@@ -473,9 +484,9 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
                               multipleItemsCallback: @escaping (_ items: [YPMediaItem]) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             
-            let selectedAssets: [(asset: PHAsset, cropRect: CGRect?)] = self.selection.map {
+            let selectedAssets: [(asset: PHAsset, cropRect: CGRect?)] = self.selection.compactMap {
                 guard let asset = PHAsset.fetchAssets(withLocalIdentifiers: [$0.assetIdentifier],
-													  options: PHFetchOptions()).firstObject else { fatalError() }
+                                                      options: PHFetchOptions()).firstObject else { return nil }
                 return (asset, $0.cropRect)
             }
             

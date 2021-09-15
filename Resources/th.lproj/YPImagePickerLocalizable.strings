@@ -20,3 +20,5 @@
 "YPImagePickerVideoTooLong" = "วิดีโอต้องน้อยกว่า %@ วินาที";
 "YPImagePickerVideoTooShort" = "ความยาววิดีโอต้องอย่างน้อย %@ วินาที";
 "YPImagePickerWarningItemsLimit" = "จำนวนรูปภาพและวิดีโอที่เลือกทั้งหมดต้องไม่เกิน %d";
+"YPImagePickerWarningVideosLimit" = "จำนวนรูปภาพและวิดีโอที่เลือกทั้งหมดต้องไม่เกิน %d";
+"YPImagePickerWarningPhotosLimit" = "จำนวนรูปภาพและวิดีโอที่เลือกทั้งหมดต้องไม่เกิน %d";
