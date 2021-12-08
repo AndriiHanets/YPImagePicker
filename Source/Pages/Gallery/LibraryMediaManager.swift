@@ -13,6 +13,11 @@ class LibraryMediaManager {
     
     weak var v: YPLibraryView?
     var collection: PHAssetCollection?
+    internal var fetchAssets: [PHAsset]! {
+        didSet {
+            fetchAssets = fetchAssets.reversed()
+        }
+    }
     internal var fetchResult: PHFetchResult<PHAsset>!
     internal var previousPreheatRect: CGRect = .zero
     internal var imageManager: PHCachingImageManager?
@@ -21,7 +26,7 @@ class LibraryMediaManager {
 
     /// If true then library has items to show. If false the user didn't allow any item to show in picker library.
     internal var hasResultItems: Bool {
-        if let fetchResult = self.fetchResult {
+        if let fetchResult = self.fetchAssets {
             return fetchResult.count > 0
         } else {
             return false

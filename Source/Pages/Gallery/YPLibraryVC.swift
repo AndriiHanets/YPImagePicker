@@ -198,7 +198,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             if selection.isEmpty && YPConfig.library.preSelectItemOnMultipleSelection,
 				delegate?.libraryViewShouldAddToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0),
 														  numSelections: selection.count) ?? true {
-                let asset = mediaManager.fetchResult[currentlySelectedIndex]
+                let asset = mediaManager.fetchAssets[currentlySelectedIndex]
                 selection = [
                     YPLibrarySelection(index: currentlySelectedIndex,
                                        cropRect: v.currentCropRect(),
@@ -289,15 +289,35 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
     }
     
     func refreshMediaRequest() {
-        let options = buildPHFetchOptions()
-        if let collection = mediaManager.collection {
-            mediaManager.fetchResult = PHAsset.fetchAssets(in: collection, options: options)
-        } else {
-            mediaManager.fetchResult = PHAsset.fetchAssets(with: options)
+        var options: PHFetchOptions?
+        var result: PHFetchResult<PHAsset>
+        
+        switch YPConfig.library.mediaType {
+        case .photo, .video:
+            options = buildPHFetchOptions()
+        case .photoAndVideo:
+            break
         }
         
+        if let collection = mediaManager.collection {
+            result = PHAsset.fetchAssets(in: collection, options: options)
+        } else {
+            if let recentCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject {
+                result = PHAsset.fetchAssets(in: recentCollection, options: options)
+            } else {
+                result = PHAsset.fetchAssets(with: buildPHFetchOptions())
+            }
+        }
+        
+        var assets = [PHAsset]()
+        result.enumerateObjects { (asset, _, _) in
+            assets.append(asset)
+        }
+        mediaManager.fetchResult = result
+        mediaManager.fetchAssets = assets
+        
         if mediaManager.hasResultItems {
-            changeAsset(mediaManager.fetchResult[0])
+            changeAsset(mediaManager.fetchAssets[0])
             v.collectionView.reloadData()
             v.collectionView.selectItem(at: IndexPath(row: 0, section: 0),
                                              animated: false,
@@ -317,7 +337,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             return userOpt
         }
         let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         options.predicate = YPConfig.library.mediaType.predicate()
         return options
     }
