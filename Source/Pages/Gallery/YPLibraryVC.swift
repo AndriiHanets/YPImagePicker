@@ -300,7 +300,12 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
         }
         
         if let collection = mediaManager.collection {
-            result = PHAsset.fetchAssets(in: collection, options: options)
+            switch collection.assetCollectionType {
+            case .album, .moment:
+                result = PHAsset.fetchAssets(in: collection, options: buildPHFetchOptions())
+            case .smartAlbum:
+                result = PHAsset.fetchAssets(in: collection, options: options)
+            } 
         } else {
             if let recentCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject {
                 result = PHAsset.fetchAssets(in: recentCollection, options: options)

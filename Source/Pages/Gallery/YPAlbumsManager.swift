@@ -21,9 +21,14 @@ class YPAlbumsManager {
         
         var albums = [YPAlbum]()
         let smartAlbumsResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum,
-                                                                        subtype: .any,
+                                                                        subtype: .albumRegular,
                                                                         options: nil)
-        for result in [smartAlbumsResult] {
+        
+        let albumsResult = PHAssetCollection.fetchAssetCollections(with: .album,
+                                                                   subtype: .any,
+                                                                   options: nil)
+
+        for result in [smartAlbumsResult, albumsResult] {
             result.enumerateObjects({ assetCollection, _, _ in
                 var album = YPAlbum()
                 album.title = assetCollection.localizedTitle ?? ""
