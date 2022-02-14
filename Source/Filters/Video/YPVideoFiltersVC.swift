@@ -138,6 +138,7 @@ public class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
                     DispatchQueue.main.async {
                         if let coverImage = self?.coverImageView.image {
                             let resultVideo = YPMediaVideo(thumbnail: coverImage,
+                                                           thumbnailOrigin: self?.inputVideo.thumbnailOrigin,
 														   videoURL: destinationURL,
 														   asset: self?.inputVideo.asset)
                             (self?.inputVideo.url).map { try? FileManager.default.removeItem(at: $0) }
@@ -273,6 +274,9 @@ extension YPVideoFiltersVC: ThumbSelectorViewDelegate {
         if let imageGenerator = imageGenerator,
             let imageRef = try? imageGenerator.copyCGImage(at: imageTime, actualTime: nil) {
             coverImageView.image = UIImage(cgImage: imageRef)
+            if inputVideo.thumbnailOrigin == nil {
+                inputVideo.thumbnailOrigin = coverImageView.image
+            }
         }
     }
 }
