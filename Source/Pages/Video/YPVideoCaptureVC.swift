@@ -252,8 +252,7 @@ public class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
             case .off: return .off
             case .on: return .on
             case .auto: return .auto
-            @unknown default:
-                fatalError()
+            @unknown default: return .off
             }
         } else {
             return .noFlash

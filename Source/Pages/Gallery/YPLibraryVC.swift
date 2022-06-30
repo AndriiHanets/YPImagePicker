@@ -284,7 +284,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
                 }
             }
         @unknown default:
-            fatalError()
+            break
         }
     }
     
@@ -396,7 +396,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
             case .audio, .unknown:
                 ()
             @unknown default:
-                fatalError()
+                break
             }
         }
     }
@@ -631,7 +631,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
                         }
                     }
                 @unknown default:
-                    fatalError()
+                    break
                 }
                 return
             }

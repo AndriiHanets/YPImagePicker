@@ -51,7 +51,7 @@ class PreiOS10PhotoCapture: YPPhotoCapture {
                 currentFlashMode = .auto
                 device.flashMode = .auto
             @unknown default:
-                fatalError()
+                break
             }
             device.unlockForConfiguration()
         } catch _ { }

@@ -40,26 +40,6 @@ class YPAlbumsManager {
                             album.thumbnail = image
                         })
                         print("albums: \(placeholerAsset.mediaType.rawValue)")
-//                        switch YPConfig.library.mediaType {
-//                        case .photo, .photoAndVideo:
-//                            switch placeholerAsset.mediaType {
-//                            case .image, .unknown:
-//                                self.getThumbnailForImage(asset: placeholerAsset, completion: { image in
-//                                    album.thumbnail = image
-//                                })
-//                            case .video:
-//                                self.getThumbnailForVideo(asset: placeholerAsset) { image in
-//                                    album.thumbnail = image
-//                                }
-//                            case .audio:
-//                                break
-//                            }
-//
-//                        case .video:
-//                            self.getThumbnailForVideo(asset: placeholerAsset) { image in
-//                                album.thumbnail = image
-//                            }
-//                        }
                     }
                     album.collection = assetCollection
                     
@@ -126,7 +106,6 @@ class YPAlbumsManager {
     
     func generateVideoThumbnailFrom(asset: AVAsset?, completion: @escaping ((UIImage?) -> Void)) {
         guard let asset = asset else {
-            print("generateVideoThumbnailFrom: nil")
             return
         }
         
