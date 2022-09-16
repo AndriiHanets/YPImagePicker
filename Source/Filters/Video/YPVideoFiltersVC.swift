@@ -46,6 +46,8 @@ public class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
         super.viewDidLoad()
 
         view.backgroundColor = YPConfig.colors.filterBackgroundColor
+        
+        trimmerView.maskColor = YPConfig.colors.filterBackgroundColor
         trimmerView.mainColor = YPConfig.colors.trimmerMainColor
         trimmerView.handleColor = YPConfig.colors.trimmerHandleColor
         trimmerView.positionBarColor = YPConfig.colors.positionLineColor
