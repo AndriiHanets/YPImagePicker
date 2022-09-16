@@ -345,6 +345,17 @@ public protocol TrimmerViewDelegate: AnyObject {
             }
             updateSelectedTime(stoppedMoving: false)
 
+            if isLeftGesture {
+                if let startTime = startTime {
+                    leftDurationView.setDuration(startTime)
+                }
+                leftDurationView.set(visable: true)
+            } else {
+                if let endTime = endTime {
+                    rightDurationView.setDuration(endTime)
+                }
+                rightDurationView.set(visable: true)
+            }
         case .cancelled, .ended, .failed:
             updateSelectedTime(stoppedMoving: true)
             isLeftGesture ? leftDurationView.set(visable: false) : rightDurationView.set(visable: false)
