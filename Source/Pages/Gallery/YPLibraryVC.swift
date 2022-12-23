@@ -321,18 +321,21 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
         mediaManager.fetchResult = result
         mediaManager.fetchAssets = assets
         
-        if mediaManager.hasResultItems {
-            changeAsset(mediaManager.fetchAssets[0])
+        if mediaManager.hasResultItems, let firstAsset = mediaManager.getAsset(at: 0) {
+            changeAsset(firstAsset)
             v.collectionView.reloadData()
-            v.collectionView.selectItem(at: IndexPath(row: 0, section: 0),
-                                             animated: false,
-                                             scrollPosition: UICollectionView.ScrollPosition())
+            v.collectionView.selectItem(
+                at: IndexPath(row: 0, section: 0),
+                animated: false,
+                scrollPosition: UICollectionView.ScrollPosition()
+            )
             if !multipleSelectionEnabled && YPConfig.library.preSelectItemOnMultipleSelection {
                 addToSelection(indexPath: IndexPath(row: 0, section: 0))
             }
         } else {
             delegate?.noPhotosForOptions()
         }
+        
         scrollToTop()
     }
     

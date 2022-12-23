@@ -222,4 +222,19 @@ class LibraryMediaManager {
             s.cancelExport()
         }
     }
+    
+    func getAsset(at index: Int) -> PHAsset? {
+        guard let fetchAssets = fetchAssets else {
+            print("FetchResult not contain this index: \(index)")
+            return nil
+        }
+        
+        guard fetchAssets.count > index else {
+            print("FetchResult not contain this index: \(index)")
+            return nil
+        }
+        
+        return fetchAssets[index]
+    }
+    
 }
