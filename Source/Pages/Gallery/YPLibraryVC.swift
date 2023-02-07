@@ -54,9 +54,26 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         registerForTapOnPreview()
         refreshMediaRequest()
 
-        v.assetViewContainer.multipleSelectionButton.isHidden = !(YPConfig.library.maxNumberOfItems > 1)
-        v.maxNumberWarningLabel.text = String(format: YPConfig.wordings.warningMaxItemsLimit,
-											  YPConfig.library.maxNumberOfItems)
+        v.assetViewContainer.multipleSelectionButton.isHidden = true
+        
+        let maxTimesLimitFormat: String
+        switch YPConfig.library.mediaType {
+        case .photo:
+            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                ? YPConfig.wordings.warningMaxPhotoLimit
+                : YPConfig.wordings.warningMaxPhotosLimit
+        case .video:
+            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                ? YPConfig.wordings.warningMaxVideoLimit
+                : YPConfig.wordings.warningMaxVideosLimit
+        case .photoAndVideo:
+            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                ? YPConfig.wordings.warningMaxItemLimit
+                : YPConfig.wordings.warningMaxItemsLimit
+        }
+        
+        v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat,
+                                              YPConfig.library.maxNumberOfItems)
         
         if let preselectedItems = YPConfig.library.preselectedItems,
            !preselectedItems.isEmpty {
@@ -75,6 +92,8 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
                 // The negative index will be corrected in the collectionView:cellForItemAt:
                 return YPLibrarySelection(index: -1, assetIdentifier: asset.localIdentifier)
             }
+            
+            isMultipleSelectionEnabled = true
             v.assetViewContainer.setMultipleSelectionMode(on: isMultipleSelectionEnabled)
             v.collectionView.reloadData()
         }

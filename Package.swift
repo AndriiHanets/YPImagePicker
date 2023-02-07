@@ -16,16 +16,11 @@ let package = Package(
             url: "https://github.com/freshOS/Stevia",
             .exact("4.8.0")
         ),
-        .package(
-            url: "https://github.com/HHK1/PryntTrimmerView",
-            .exact("4.0.2")
-        )
-
     ],
     targets: [
         .target(
             name: "YPImagePicker",
-            dependencies: ["Stevia", "PryntTrimmerView"],
+            dependencies: ["Stevia"],
             path: "Source",
             exclude: ["Info.plist", "YPImagePickerHeader.h"]
         )

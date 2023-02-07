@@ -181,7 +181,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
             let cellIsInTheSelectionPool = isInSelectionPool(indexPath: indexPath)
             let cellIsCurrentlySelected = previouslySelectedIndexPath.row == currentlySelectedIndex
             if cellIsInTheSelectionPool {
-                if cellIsCurrentlySelected {
+                if cellIsCurrentlySelected || YPConfig.library.singleTapToDeselect {
                     deselect(indexPath: indexPath)
                 }
             } else if isLimitExceeded == false {

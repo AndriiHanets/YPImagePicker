@@ -38,12 +38,14 @@ public class YPMediaPhoto {
 public class YPMediaVideo {
     
     public var thumbnail: UIImage
+    public var thumbnailOrigin: UIImage?
     public var url: URL
     public let fromCamera: Bool
     public var asset: PHAsset?
 
-    public init(thumbnail: UIImage, videoURL: URL, fromCamera: Bool = false, asset: PHAsset? = nil) {
+    public init(thumbnail: UIImage, thumbnailOrigin: UIImage? = nil, videoURL: URL, fromCamera: Bool = false, asset: PHAsset? = nil) {
         self.thumbnail = thumbnail
+        self.thumbnailOrigin = thumbnailOrigin
         self.url = videoURL
         self.fromCamera = fromCamera
         self.asset = asset

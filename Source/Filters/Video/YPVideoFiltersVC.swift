@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import PryntTrimmerView
 import Stevia
 
 public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
@@ -41,6 +40,8 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
     }()
     private let trimmerView: TrimmerView = {
         let v = TrimmerView()
+        
+        v.maskColor = YPConfig.colors.filterBackgroundColor
         v.mainColor = YPConfig.colors.trimmerMainColor
         v.handleColor = YPConfig.colors.trimmerHandleColor
         v.positionBarColor = YPConfig.colors.positionLineColor
@@ -57,13 +58,13 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
     private let trimBottomItem: YPMenuItem = {
         let v = YPMenuItem()
         v.textLabel.text = YPConfig.wordings.trim
-        v.button.addTarget(self, action: #selector(selectTrim), for: .touchUpInside)
+        v.button.addTarget(YPVideoFiltersVC.self, action: #selector(selectTrim), for: .touchUpInside)
         return v
     }()
     private let coverBottomItem: YPMenuItem = {
         let v = YPMenuItem()
         v.textLabel.text = YPConfig.wordings.cover
-        v.button.addTarget(self, action: #selector(selectCover), for: .touchUpInside)
+        v.button.addTarget(YPVideoFiltersVC.self, action: #selector(selectCover), for: .touchUpInside)
         return v
     }()
     private let videoView: YPVideoView = {
@@ -172,7 +173,7 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
         trimmerContainerView.Top == videoView.Bottom
         trimmerContainerView.Bottom == trimBottomItem.Top
 
-        trimmerView.fillHorizontally(m: 30).centerVertically()
+//        trimmerView.fillHorizontally(m: 30).centerVertically()
         trimmerView.Height == trimmerContainerView.Height / 3
 
         coverThumbSelectorView.followEdges(trimmerView)
@@ -203,9 +204,13 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
                 case .completed:
                     DispatchQueue.main.async {
                         if let coverImage = self?.coverImageView.image {
-                            let resultVideo = YPMediaVideo(thumbnail: coverImage,
-														   videoURL: destinationURL,
-														   asset: self?.inputVideo.asset)
+                            let resultVideo = YPMediaVideo(
+                                thumbnail: coverImage,
+                                thumbnailOrigin: self?.inputVideo.thumbnailOrigin,
+                                videoURL: destinationURL,
+                                asset: self?.inputVideo.asset
+                            )
+                            (self?.inputVideo.url).map { try? FileManager.default.removeItem(at: $0) }
                             didSave(YPMediaItem.video(v: resultVideo))
                             self?.setupRightBarButtonItem()
                         } else {
@@ -338,6 +343,11 @@ extension YPVideoFiltersVC: ThumbSelectorViewDelegate {
         if let imageGenerator = imageGenerator,
             let imageRef = try? imageGenerator.copyCGImage(at: imageTime, actualTime: nil) {
             coverImageView.image = UIImage(cgImage: imageRef)
+            
+            if inputVideo.thumbnailOrigin == nil {
+                inputVideo.thumbnailOrigin = coverImageView.image
+            }
+            
         }
     }
 }
