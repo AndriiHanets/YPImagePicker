@@ -105,7 +105,7 @@
 		EBA37B0B26F73080005DAAD4 /* YPAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA37B0626F73080005DAAD4 /* YPAlbumCell.swift */; };
 		EBA37B0C26F73080005DAAD4 /* YPAlbumsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA37B0726F73080005DAAD4 /* YPAlbumsManager.swift */; };
 		EBA37B0D26F73080005DAAD4 /* YPAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA37B0826F73080005DAAD4 /* YPAlbumView.swift */; };
-		EBA37B3026F74228005DAAD4 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EBA37B3026F74228005DAAD4 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EBA37B5226F749C6005DAAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA37B5126F749C6005DAAD4 /* AppDelegate.swift */; };
 		EBA37B5B26F749C7005DAAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBA37B5A26F749C7005DAAD4 /* Assets.xcassets */; };
 		EBA37B5E26F749C7005DAAD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBA37B5C26F749C7005DAAD4 /* LaunchScreen.storyboard */; };
@@ -218,7 +218,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EBA37B3026F74228005DAAD4 /* BuildFile in Embed Frameworks */,
+				EBA37B3026F74228005DAAD4 /* (null) in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1153,7 +1153,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1210,7 +1210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1243,7 +1243,7 @@
 				);
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1280,7 +1280,7 @@
 				);
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1312,7 +1312,7 @@
 				DEVELOPMENT_TEAM = B3U3XRF8D7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1343,7 +1343,7 @@
 				DEVELOPMENT_TEAM = B3U3XRF8D7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

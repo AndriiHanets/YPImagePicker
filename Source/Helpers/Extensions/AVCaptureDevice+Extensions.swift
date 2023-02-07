@@ -42,13 +42,18 @@ internal extension AVCaptureDevice {
 
     /// Best available device for selected position.
     class func deviceForPosition(_ p: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        let devicesSession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: p)
-        let devices = devicesSession.devices
-        guard !devices.isEmpty else {
-            print("Don't have supported cameras for this position: \(p.rawValue)")
-            return nil
-        }
+        if #available(iOS 11.1, *) {
+            let devicesSession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: p)
+            let devices = devicesSession.devices
+            guard !devices.isEmpty else {
+                print("Don't have supported cameras for this position: \(p.rawValue)")
+                return nil
+            }
 
-        return devices.first
+            return devices.first
+        } else {
+            return AVCaptureDevice.default(.builtInDualCamera, for: .video, position: p)
+        }
+        
     }
 }
