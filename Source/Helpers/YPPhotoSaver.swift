@@ -46,9 +46,16 @@ public class YPPhotoSaver {
     fileprivate class func album(named: String) -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "title = %@", named)
-        let collection = PHAssetCollection.fetchAssetCollections(with: .album,
-                                                                 subtype: .any,
-                                                                 options: fetchOptions)
+        
+        
+        let collection = PHAssetCollection.fetchAssetCollections(
+            with: .album,
+            subtype: .any,
+            options: fetchOptions
+        )
+        
+        
+        
         return collection.firstObject
     }
 }

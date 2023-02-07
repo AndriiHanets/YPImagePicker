@@ -253,7 +253,11 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         if let collection = mediaManager.collection {
             mediaManager.fetchResult = PHAsset.fetchAssets(in: collection, options: options)
         } else {
-            mediaManager.fetchResult = PHAsset.fetchAssets(with: options)
+            if let recentCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject {
+                mediaManager.fetchResult = PHAsset.fetchAssets(in: recentCollection, options: options)
+            } else {
+                mediaManager.fetchResult = PHAsset.fetchAssets(with: options)
+            }
         }
         
         if mediaManager.hasResultItems,
@@ -273,15 +277,17 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         scrollToTop()
     }
     
-    func buildPHFetchOptions() -> PHFetchOptions {
-        // Sorting condition
+    func buildPHFetchOptions() -> PHFetchOptions? {
+        guard YPConfig.library.mediaType != .photoAndVideo else { return nil }
+        
         if let userOpt = YPConfig.library.options {
             return userOpt
         }
 
         let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         options.predicate = YPConfig.library.mediaType.predicate()
+        
         return options
     }
     

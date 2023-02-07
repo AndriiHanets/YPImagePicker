@@ -13,7 +13,18 @@ class LibraryMediaManager {
     
     weak var v: YPLibraryView?
     var collection: PHAssetCollection?
-    internal var fetchResult: PHFetchResult<PHAsset>?
+    internal var fetchResult: PHFetchResult<PHAsset>? {
+        didSet {
+            var assets = [PHAsset]()
+            fetchResult?.enumerateObjects { (asset, _, _) in
+                assets.append(asset)
+            }
+            assets.reverse()
+            
+            fetchAssets = assets
+        }
+    }
+    internal var fetchAssets: [PHAsset]?
     internal var previousPreheatRect: CGRect = .zero
     internal var imageManager: PHCachingImageManager?
     internal var exportTimer: Timer?
@@ -220,14 +231,16 @@ class LibraryMediaManager {
     }
 
     func getAsset(at index: Int) -> PHAsset? {
-        guard let fetchResult = fetchResult else {
+        guard let fetchAssets = fetchAssets else {
             print("FetchResult not contain this index: \(index)")
             return nil
         }
-        guard fetchResult.count > index else {
+        guard fetchAssets.count > index else {
             print("FetchResult not contain this index: \(index)")
             return nil
         }
-        return fetchResult.object(at: index)
+        
+        return fetchAssets[index]
     }
+    
 }

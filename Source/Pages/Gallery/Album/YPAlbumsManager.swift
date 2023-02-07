@@ -20,14 +20,12 @@ class YPAlbumsManager {
         }
         
         var albums = [YPAlbum]()
-        let options = PHFetchOptions()
-        
         let smartAlbumsResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum,
                                                                         subtype: .albumRegular,
-                                                                        options: options)
+                                                                        options: nil)
         let albumsResult = PHAssetCollection.fetchAssetCollections(with: .album,
                                                                    subtype: .any,
-                                                                   options: options)
+                                                                   options: nil)
         for result in [smartAlbumsResult, albumsResult] {
             result.enumerateObjects({ assetCollection, _, _ in
                 var album = YPAlbum()
