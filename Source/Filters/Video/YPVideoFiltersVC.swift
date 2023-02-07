@@ -58,13 +58,13 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
     private let trimBottomItem: YPMenuItem = {
         let v = YPMenuItem()
         v.textLabel.text = YPConfig.wordings.trim
-        v.button.addTarget(YPVideoFiltersVC.self, action: #selector(selectTrim), for: .touchUpInside)
+        v.button.addTarget(self, action: #selector(selectTrim), for: .touchUpInside)
         return v
     }()
     private let coverBottomItem: YPMenuItem = {
         let v = YPMenuItem()
         v.textLabel.text = YPConfig.wordings.cover
-        v.button.addTarget(YPVideoFiltersVC.self, action: #selector(selectCover), for: .touchUpInside)
+        v.button.addTarget(self, action: #selector(selectCover), for: .touchUpInside)
         return v
     }()
     private let videoView: YPVideoView = {
@@ -173,8 +173,9 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
         trimmerContainerView.Top == videoView.Bottom
         trimmerContainerView.Bottom == trimBottomItem.Top
 
-//        trimmerView.fillHorizontally(m: 30).centerVertically()
-        trimmerView.Height == trimmerContainerView.Height / 3
+        trimmerView.centerVertically().centerHorizontally()
+        trimmerView.Height == trimmerContainerView.Height * 0.33
+        trimmerView.leading(30).trailing(30)
 
         coverThumbSelectorView.followEdges(trimmerView)
     }
