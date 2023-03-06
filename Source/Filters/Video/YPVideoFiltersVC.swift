@@ -99,6 +99,8 @@ public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
         // Set initial video cover
         imageGenerator = AVAssetImageGenerator(asset: self.inputAsset)
         imageGenerator?.appliesPreferredTrackTransform = true
+        imageGenerator?.requestedTimeToleranceAfter = CMTime.zero
+        imageGenerator?.requestedTimeToleranceBefore = CMTime.zero
         didChangeThumbPosition(CMTime(seconds: 1, preferredTimescale: 1))
     }
 
@@ -341,14 +343,23 @@ extension YPVideoFiltersVC: TrimmerViewDelegate {
 // MARK: - ThumbSelectorViewDelegate
 extension YPVideoFiltersVC: ThumbSelectorViewDelegate {
     public func didChangeThumbPosition(_ imageTime: CMTime) {
-        if let imageGenerator = imageGenerator,
-            let imageRef = try? imageGenerator.copyCGImage(at: imageTime, actualTime: nil) {
-            coverImageView.image = UIImage(cgImage: imageRef)
-            
-            if inputVideo.thumbnailOrigin == nil {
-                inputVideo.thumbnailOrigin = coverImageView.image
+        imageGenerator?.generateCGImagesAsynchronously(
+            forTimes: [NSValue(time: imageTime)],
+            completionHandler: { (_, image, _, _, _) in
+                guard let image = image else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.imageGenerator?.cancelAllCGImageGeneration()
+                    
+                    self.coverImageView.image = UIImage(cgImage: image)
+                    
+                    if self.inputVideo.thumbnailOrigin == nil {
+                        self.inputVideo.thumbnailOrigin = self.coverImageView.image
+                    }
+                }
             }
-            
-        }
+        )
     }
 }
