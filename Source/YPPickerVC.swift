@@ -316,13 +316,12 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         guard let libraryVC = libraryVC else { ypLog("YPLibraryVC deallocated"); return }
         
         if mode == .library {
-            libraryVC.selectedMedia(photoCallback: { photo in
-                self.didSelectItems?([YPMediaItem.photo(p: photo)])
-            }, videoCallback: { video in
-                self.didSelectItems?([YPMediaItem
-                                        .video(v: video)])
-            }, multipleItemsCallback: { items in
-                self.didSelectItems?(items)
+            libraryVC.selectedMedia(photoCallback: { [weak self] photo in
+                self?.didSelectItems?([YPMediaItem.photo(p: photo)])
+            }, videoCallback: { [weak self] video in
+                self?.didSelectItems?([YPMediaItem.video(v: video)])
+            }, multipleItemsCallback: { [weak self] items in
+                self?.didSelectItems?(items)
             })
         }
     }

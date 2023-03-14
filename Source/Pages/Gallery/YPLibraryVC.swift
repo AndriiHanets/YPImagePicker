@@ -325,27 +325,24 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         let updateCropInfo = {
             self.updateCropInfo()
         }
-		
-        // MARK: add a func(updateCropInfo) after crop multiple
-        DispatchQueue.global(qos: .userInitiated).async {
-            switch asset.mediaType {
-            case .image:
-                self.v.assetZoomableView.setImage(asset,
-                                                  mediaManager: self.mediaManager,
-                                                  storedCropPosition: self.fetchStoredCrop(),
-                                                  completion: completion,
-                                                  updateCropInfo: updateCropInfo)
-            case .video:
-                self.v.assetZoomableView.setVideo(asset,
-                                                  mediaManager: self.mediaManager,
-                                                  storedCropPosition: self.fetchStoredCrop(),
-                                                  completion: { completion(false) },
-                                                  updateCropInfo: updateCropInfo)
-            case .audio, .unknown:
-                ()
-            @unknown default:
-                ypLog("Bug. Unknown default.")
-            }
+        
+        switch asset.mediaType {
+        case .image:
+            self.v.assetZoomableView.setImage(asset,
+                                              mediaManager: self.mediaManager,
+                                              storedCropPosition: self.fetchStoredCrop(),
+                                              completion: completion,
+                                              updateCropInfo: updateCropInfo)
+        case .video:
+            self.v.assetZoomableView.setVideo(asset,
+                                              mediaManager: self.mediaManager,
+                                              storedCropPosition: self.fetchStoredCrop(),
+                                              completion: { completion(false) },
+                                              updateCropInfo: updateCropInfo)
+        case .audio, .unknown:
+            ()
+        @unknown default:
+            ypLog("Bug. Unknown default.")
         }
     }
 
