@@ -248,15 +248,18 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
     }
     
     func refreshMediaRequest() {
-        let options = buildPHFetchOptions()
-
         if let collection = mediaManager.collection {
-            mediaManager.fetchResult = PHAsset.fetchAssets(in: collection, options: options)
+            if collection.assetCollectionType == .smartAlbum {
+                mediaManager.fetchResult = PHAsset.fetchAssets(in: collection, options: buildPHFetchOptions(sortByDate: false))
+            } else {
+                mediaManager.fetchResult = PHAsset.fetchAssets(in: collection, options: buildPHFetchOptions())
+            }
+            
         } else {
             if let recentCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject {
-                mediaManager.fetchResult = PHAsset.fetchAssets(in: recentCollection, options: options)
+                mediaManager.fetchResult = PHAsset.fetchAssets(in: recentCollection, options: buildPHFetchOptions(sortByDate: false))
             } else {
-                mediaManager.fetchResult = PHAsset.fetchAssets(with: options)
+                mediaManager.fetchResult = PHAsset.fetchAssets(with: buildPHFetchOptions())
             }
         }
         
@@ -277,7 +280,7 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         scrollToTop()
     }
     
-    func buildPHFetchOptions() -> PHFetchOptions? {
+    func buildPHFetchOptions(sortByDate: Bool = true) -> PHFetchOptions? {
         guard YPConfig.library.mediaType != .photoAndVideo else { return nil }
         
         if let userOpt = YPConfig.library.options {
@@ -285,7 +288,9 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         }
 
         let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        if sortByDate {
+            options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        }
         options.predicate = YPConfig.library.mediaType.predicate()
         
         return options
