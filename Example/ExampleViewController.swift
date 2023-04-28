@@ -33,6 +33,16 @@ class ExampleViewController: UIViewController {
         button.addTarget(self, action: #selector(showPicker), for: .touchUpInside)
         return button
     }()
+    lazy var trimButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0,
+                                            y: 0,
+                                            width: 100,
+                                            height: 100))
+        button.setTitle("trim", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(showTrimmer), for: .touchUpInside)
+        return button
+    }()
 
     lazy var resultsButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0,
@@ -49,10 +59,12 @@ class ExampleViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = .white
-        view.addSubview(selectedImageV)
         view.addSubview(pickButton)
         pickButton.center = view.center
         view.addSubview(resultsButton)
+        
+        view.addSubview(trimButton)
+        view.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
     }
 
     @objc
@@ -129,10 +141,10 @@ class ExampleViewController: UIViewController {
             if let firstItem = items.first {
                 switch firstItem {
                 case .photo(let photo):
-                    self.selectedImageV.image = photo.image
+//                    self.selectedImageV.image = photo.image
                     picker?.dismiss(animated: true, completion: nil)
                 case .video(let video):
-                    self.selectedImageV.image = video.thumbnail
+//                    self.selectedImageV.image = video.thumbnail
 
                     let assetURL = video.url
                     let playerVC = AVPlayerViewController()
@@ -148,6 +160,38 @@ class ExampleViewController: UIViewController {
         }
 
         present(picker, animated: true, completion: nil)
+    }
+    
+    @objc
+    func showTrimmer() {
+        YPImagePickerConfiguration.shared.video.trimmerMinDuration = 0
+        YPImagePickerConfiguration.shared.video.trimmerMaxDuration = Double.greatestFiniteMagnitude
+        var video: YPMediaVideo!
+        
+        switch selectedItems.first {
+        case .video(let v):
+            video = v
+        default:
+            break
+        }
+        
+        let videoEditor = YPVideoFiltersVC.initWith(
+            video: YPMediaVideo(thumbnail: video.thumbnail, videoURL: video.url),
+            isFromSelectionVC: true
+        )
+        
+        let navVC = UINavigationController(rootViewController: videoEditor)
+        navVC.navigationBar.isTranslucent = false
+        navVC.navigationBar.tintColor = .ypLabel
+        navVC.view.backgroundColor = .ypSystemBackground
+        navVC.navigationBar.backgroundColor = .white
+        navVC.modalPresentationStyle = .overFullScreen
+        
+        present(navVC, animated: true, completion: nil)
+        
+        videoEditor.didCancel = {
+            navVC.dismiss(animated: true)
+        }
     }
 }
 

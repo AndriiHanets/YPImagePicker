@@ -13,8 +13,7 @@ protocol YPBottomPagerDelegate: AnyObject {
     func pagerScrollViewDidScroll(_ scrollView: UIScrollView)
     func pagerDidSelectController(_ vc: UIViewController)
 }
-open class YPBottomPager: UIViewController, UIScrollViewDelegate {
-    private var rotationInProgress = false
+open class YPBottomPager: BaseViewController, UIScrollViewDelegate {
     private var isConfigured = false
     
     weak var delegate: YPBottomPagerDelegate?
@@ -138,18 +137,10 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
         let currentMenuItem = v.header.menuItems[page]
         currentMenuItem.select()
     }
-    
-    open override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+
+    override func orientationDidChanged() {
         reload()
         resetPageOffset()
-    }
-    
-    open override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-        rotationInProgress = true
-    }
-    
-    open override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        rotationInProgress = false
     }
     
     private func resetPageOffset() {

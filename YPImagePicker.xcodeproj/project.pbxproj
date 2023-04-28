@@ -56,6 +56,8 @@
 		99CF6D2B201CB96700487F77 /* YPVideoCaptureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF6D2A201CB96700487F77 /* YPVideoCaptureHelper.swift */; };
 		99D1DC2B1F9788930047F0E0 /* YPImagePickerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D1DC2A1F9788930047F0E0 /* YPImagePickerConfiguration.swift */; };
 		AA69BCF222E601D100FBB925 /* YPDeviceOrientationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69BCF122E601D100FBB925 /* YPDeviceOrientationHelper.swift */; };
+		BC00A24829FC176600A5DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC00A24729FC176600A5DBF8 /* ViewController.swift */; };
+		BC00A24929FC176600A5DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC00A24729FC176600A5DBF8 /* ViewController.swift */; };
 		BCCCC1B3299289DB00678B48 /* CropMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B0299289DA00678B48 /* CropMaskView.swift */; };
 		BCCCC1B4299289DB00678B48 /* VideoCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B1299289DB00678B48 /* VideoCropView.swift */; };
 		BCCCC1B5299289DB00678B48 /* VideoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B2299289DB00678B48 /* VideoScrollView.swift */; };
@@ -280,6 +282,7 @@
 		99CF6D2A201CB96700487F77 /* YPVideoCaptureHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPVideoCaptureHelper.swift; sourceTree = "<group>"; };
 		99D1DC2A1F9788930047F0E0 /* YPImagePickerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPImagePickerConfiguration.swift; sourceTree = "<group>"; };
 		AA69BCF122E601D100FBB925 /* YPDeviceOrientationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPDeviceOrientationHelper.swift; sourceTree = "<group>"; };
+		BC00A24729FC176600A5DBF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BCCCC1B0299289DA00678B48 /* CropMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropMaskView.swift; sourceTree = "<group>"; };
 		BCCCC1B1299289DB00678B48 /* VideoCropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCropView.swift; sourceTree = "<group>"; };
 		BCCCC1B2299289DB00678B48 /* VideoScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoScrollView.swift; sourceTree = "<group>"; };
@@ -434,6 +437,7 @@
 				99B8C4C2208F8EE900127119 /* YPLoadingView.swift */,
 				99C6D6B41F1FB5C100711DB2 /* YPPhotoSaver.swift */,
 				EB05F6E6214A7191002040AA /* YPVideoProcessor.swift */,
+				BC00A24729FC176600A5DBF8 /* ViewController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -898,6 +902,7 @@
 				EB473E2B208E1ECB00D16105 /* AVCaptureDevice+Extensions.swift in Sources */,
 				EBA37B0026F7302B005DAAD4 /* YPFlashMode.swift in Sources */,
 				99A3C91020319227008D7E23 /* YPCropView.swift in Sources */,
+				BC00A24929FC176600A5DBF8 /* ViewController.swift in Sources */,
 				BCCCC1B4299289DB00678B48 /* VideoCropView.swift in Sources */,
 				99C6D6D11F1FB5C100711DB2 /* YPImagePicker.swift in Sources */,
 				327D7B592409510300B9C368 /* YPFonts.swift in Sources */,
@@ -1019,6 +1024,7 @@
 				EBA37B5226F749C6005DAAD4 /* AppDelegate.swift in Sources */,
 				EBA37BB126F74CBA005DAAD4 /* YPLoaders.swift in Sources */,
 				EBA37B7526F74CBA005DAAD4 /* YPLibraryVC+PanGesture.swift in Sources */,
+				BC00A24829FC176600A5DBF8 /* ViewController.swift in Sources */,
 				EBA37B8426F74CBA005DAAD4 /* YPColors.swift in Sources */,
 				EBA37B9726F74CBA005DAAD4 /* AVPlayer+Extensions.swift in Sources */,
 				EBA37B6426F74C9A005DAAD4 /* YPImagePicker.swift in Sources */,

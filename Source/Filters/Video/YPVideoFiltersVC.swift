@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import Stevia
 
-public final class YPVideoFiltersVC: UIViewController, IsMediaFilterVC {
+public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
 
     /// Designated initializer
     public class func initWith(video: YPMediaVideo,

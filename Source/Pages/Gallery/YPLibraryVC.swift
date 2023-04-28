@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import PhotosUI
 
-internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
+internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
     internal weak var delegate: YPLibraryViewDelegate?
     internal var v = YPLibraryView(frame: .zero)
     internal var isProcessing = false // true if video or image is in processing state
@@ -163,11 +163,10 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         super.viewWillDisappear(animated)
         
         pausePlayer()
-        NotificationCenter.default.removeObserver(self)
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
-    public override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    override func orientationDidChanged() {
         v.updateLayoutOnRotation()
         v.collectionView.collectionViewLayout.invalidateLayout()
         v.collectionView.reloadData()

@@ -174,6 +174,11 @@ internal final class YPLibraryView: UIView {
         }
         layoutIfNeeded()
         assetZoomableView.updateAssetLayout()
+        
+        // investigate how to fix overlay frame incorrect setting
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.assetViewContainer.ypAssetZoomableViewDidLayoutSubviews(self.assetZoomableView)
+        }
     }
 
     // MARK: - Private Methods
