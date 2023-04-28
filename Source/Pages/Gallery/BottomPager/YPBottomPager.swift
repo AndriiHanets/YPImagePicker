@@ -14,6 +14,8 @@ protocol YPBottomPagerDelegate: AnyObject {
     func pagerDidSelectController(_ vc: UIViewController)
 }
 open class YPBottomPager: UIViewController, UIScrollViewDelegate {
+    private var rotationInProgress = false
+    private var isConfigured = false
     
     weak var delegate: YPBottomPagerDelegate?
     var controllers = [UIViewController]() { didSet { reload() } }
@@ -33,6 +35,8 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !rotationInProgress else { return }
+        
         delegate?.pagerScrollViewDidScroll(scrollView)
     }
 
@@ -52,34 +56,46 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
         let screenWidth = YPImagePickerConfiguration.screenWidth
         let viewWidth: CGFloat = screenWidth
         for (index, c) in controllers.enumerated() {
-            c.willMove(toParent: self)
-            addChild(c)
             let x: CGFloat = CGFloat(index) * viewWidth
-            v.scrollView.sv(c.view)
-            c.didMove(toParent: self)
-            c.view.left(x)
-            c.view.top(0)
-            c.view.width(viewWidth)
-            equal(heights: c.view, v.scrollView)
+            
+            if isConfigured {
+                c.view.leftConstraint?.constant = x
+                c.view.topConstraint?.constant = 0
+                c.view.widthConstraint?.constant = viewWidth
+                c.view.heightConstraint?.constant = v.scrollView.frame.height
+            } else {
+                c.willMove(toParent: self)
+                addChild(c)
+                v.scrollView.sv(c.view)
+                c.didMove(toParent: self)
+                c.view.left(x)
+                c.view.top(0)
+                c.view.width(viewWidth)
+                equal(heights: c.view, v.scrollView)
+            }
         }
         
         let scrollableWidth: CGFloat = CGFloat(controllers.count) * CGFloat(viewWidth)
         v.scrollView.contentSize = CGSize(width: scrollableWidth, height: 0)
         
         // Build headers
-        for (index, c) in controllers.enumerated() {
-            let menuItem = YPMenuItem()
-            menuItem.textLabel.text = c.title?.capitalized
-            menuItem.button.tag = index
-            menuItem.button.addTarget(self,
-                                      action: #selector(tabTapped(_:)),
-                                      for: .touchUpInside)
-            v.header.menuItems.append(menuItem)
+        if !isConfigured {
+            for (index, c) in controllers.enumerated() {
+                let menuItem = YPMenuItem()
+                menuItem.textLabel.text = c.title?.capitalized
+                menuItem.button.tag = index
+                menuItem.button.addTarget(self,
+                                          action: #selector(tabTapped(_:)),
+                                          for: .touchUpInside)
+                v.header.menuItems.append(menuItem)
+            }
+            
+            let currentMenuItem = v.header.menuItems[0]
+            currentMenuItem.select()
         }
-        
-        let currentMenuItem = v.header.menuItems[0]
-        currentMenuItem.select()
         v.header.refreshMenuItems()
+        
+        isConfigured = true
     }
     
     @objc
@@ -122,4 +138,23 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
         let currentMenuItem = v.header.menuItems[page]
         currentMenuItem.select()
     }
+    
+    open override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        reload()
+        resetPageOffset()
+    }
+    
+    open override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        rotationInProgress = true
+    }
+    
+    open override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+        rotationInProgress = false
+    }
+    
+    private func resetPageOffset() {
+        let newOffset = CGFloat(currentPage) * v.scrollView.frame.width
+        v.scrollView.setContentOffset(CGPoint(x: newOffset, y: 0), animated: false)
+    }
+    
 }

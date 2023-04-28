@@ -26,6 +26,10 @@ public struct YPImagePickerConfiguration {
 		}
 		return screenWidth
     }
+    
+    public static var screenHeight: CGFloat {
+        UIScreen.main.bounds.height
+    }
 
     /// If don't want to have logs from picker, set it to false.
     public var isDebugLogsEnabled: Bool = true

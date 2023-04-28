@@ -10,6 +10,7 @@ import UIKit
 import Stevia
 
 final class YPPagerMenu: UIView {
+    private var isConfigured = false
     
     var didSetConstraints = false
     var menuItems = [YPMenuItem]()
@@ -27,11 +28,12 @@ final class YPPagerMenu: UIView {
         let menuItemWidth: CGFloat = screenWidth / CGFloat(menuItems.count)
         var previousMenuItem: YPMenuItem?
         for m in menuItems {
-            sv(
-                m
-            )
-            
-            m.fillVertically().width(menuItemWidth)
+            sv(m)
+            if isConfigured {
+                m.widthConstraint?.constant = menuItemWidth
+            } else {
+                m.fillVertically().width(menuItemWidth)
+            }
             if let pm = previousMenuItem {
                 pm-0-m
             } else {
@@ -40,6 +42,8 @@ final class YPPagerMenu: UIView {
             
             previousMenuItem = m
         }
+        
+        isConfigured = true
     }
     
     override func updateConstraints() {

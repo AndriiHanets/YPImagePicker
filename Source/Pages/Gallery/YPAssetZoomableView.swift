@@ -57,6 +57,19 @@ final class YPAssetZoomableView: UIScrollView {
         }
     }
     
+    func updateAssetLayout() {
+        guard let currentAsset = currentAsset else { return }
+        
+        switch currentAsset.mediaType {
+        case .image:
+            setAssetFrame(for: photoImageView, with: photoImageView.image ?? UIImage())
+        case .video:
+            setAssetFrame(for: videoView, with: videoView.previewImageView.image ?? UIImage())
+        default:
+            break
+        }
+    }
+    
     public func setVideo(_ video: PHAsset,
                          mediaManager: LibraryMediaManager,
                          storedCropPosition: YPLibrarySelection?,
@@ -181,7 +194,7 @@ fileprivate extension YPAssetZoomableView {
         self.zoomScale = 1
         
         // Calculating and setting the image view frame depending on screenWidth
-        let screenWidth = YPImagePickerConfiguration.screenWidth
+        let screenWidth = min(self.frame.width, self.frame.height)
         
         let w = image.size.width
         let h = image.size.height

@@ -163,6 +163,18 @@ internal final class YPLibraryView: UIView {
         let size = screenWidth / 4 * UIScreen.main.scale
         return CGSize(width: size, height: size)
     }
+    
+    func updateLayoutOnRotation() {
+        if UIDevice.current.userInterfaceIdiom == .pad, UIDevice.current.orientation.isLandscape {
+            assetViewContainer.widthConstraint?.constant = YPImagePickerConfiguration.screenWidth / 2
+            assetViewContainer.heightConstraint?.constant = YPImagePickerConfiguration.screenHeight / 2
+        } else {
+            assetViewContainer.widthConstraint?.constant = YPImagePickerConfiguration.screenWidth
+            assetViewContainer.heightConstraint?.constant = YPImagePickerConfiguration.screenWidth
+        }
+        layoutIfNeeded()
+        assetZoomableView.updateAssetLayout()
+    }
 
     // MARK: - Private Methods
 
@@ -188,9 +200,20 @@ internal final class YPLibraryView: UIView {
         line.height(1)
         line.fillHorizontally()
 
-        assetViewContainer.top(0).fillHorizontally().heightEqualsWidth()
-        self.assetViewContainerConstraintTop = assetViewContainer.topConstraint
-        assetZoomableView.fillContainer().heightEqualsWidth()
+        if UIDevice.current.userInterfaceIdiom == .pad, UIDevice.current.orientation.isLandscape {
+            assetViewContainer.width(YPImagePickerConfiguration.screenWidth / 2)
+            assetViewContainer.height(YPImagePickerConfiguration.screenHeight / 2)
+            
+        } else {
+            assetViewContainer.width(YPImagePickerConfiguration.screenWidth)
+            assetViewContainer.height(YPImagePickerConfiguration.screenWidth)
+        }
+        
+        assetViewContainer.top(0)
+        assetViewContainer.centerHorizontally()
+        
+        assetViewContainerConstraintTop = assetViewContainer.topConstraint
+        assetZoomableView.fillContainer()
         assetZoomableView.Bottom == collectionView.Top
         assetViewContainer.sendSubviewToBack(assetZoomableView)
 
@@ -200,5 +223,14 @@ internal final class YPLibraryView: UIView {
         |maxNumberWarningView|.bottom(0)
         maxNumberWarningView.Top == safeAreaLayoutGuide.Bottom - 40
         maxNumberWarningLabel.centerHorizontally().top(11)
+    }
+}
+
+extension UIView {
+    var userAddedConstraints: [NSLayoutConstraint] {
+        return constraints.filter { c in
+            guard let cId = c.identifier else { return true }
+            return !cId.contains("UIView-Encapsulated-Layout")
+        }
     }
 }

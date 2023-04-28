@@ -167,6 +167,12 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
+    public override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        v.updateLayoutOnRotation()
+        v.collectionView.collectionViewLayout.invalidateLayout()
+        v.collectionView.reloadData()
+    }
+    
     // MARK: - Crop control
     
     @objc
