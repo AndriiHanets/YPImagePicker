@@ -147,7 +147,7 @@ extension YPAssetViewContainer: YPAssetZoomableViewDelegate {
         
         if let itemOverlay = itemOverlay {
             // update grid position
-            itemOverlay.frame = frame.intersection(newFrame)
+            itemOverlay.frame = bounds.intersection(newFrame)
             itemOverlay.layoutIfNeeded()
         }
         
