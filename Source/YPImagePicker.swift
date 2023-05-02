@@ -49,10 +49,6 @@ open class YPImagePicker: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return YPImagePickerConfiguration.shared.preferredStatusBarStyle
     }
