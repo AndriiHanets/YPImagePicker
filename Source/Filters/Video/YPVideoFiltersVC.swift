@@ -166,17 +166,18 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
         coverBottomItem.trailing(0)
         equal(sizes: trimBottomItem, coverBottomItem)
 
-        videoView.heightEqualsWidth().fillHorizontally().top(0)
+        videoView.fillHorizontally().top(0)
         videoView.Bottom == trimmerContainerView.Top
 
         coverImageView.followEdges(videoView)
 
+        trimmerContainerView.heightAnchor.constraint(equalToConstant: 220).isActive = true
         trimmerContainerView.fillHorizontally()
         trimmerContainerView.Top == videoView.Bottom
         trimmerContainerView.Bottom == trimBottomItem.Top
 
         trimmerView.centerVertically().centerHorizontally()
-        trimmerView.Height == trimmerContainerView.Height * 0.33
+        trimmerView.Height == trimmerContainerView.Height * 0.5
         trimmerView.leading(30).trailing(30)
 
         coverThumbSelectorView.followEdges(trimmerView)
