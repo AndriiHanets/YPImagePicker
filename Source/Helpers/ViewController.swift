@@ -11,7 +11,7 @@ import UIKit
 open class BaseViewController: UIViewController {
     var orientation: UIDeviceOrientation { UIDevice.current.orientation }
     private var savedOrientation = UIDeviceOrientation.portrait
-    private var shouldChangeOrientation = false
+    private(set) var shouldChangeOrientation = false
     private(set) var rotationInProgress = false
   
     open override func viewDidLoad() {
@@ -30,6 +30,7 @@ open class BaseViewController: UIViewController {
         guard shouldChangeOrientation else { return }
 
         orientationDidChanged()
+        shouldChangeOrientation = false
     }
     
     open override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {

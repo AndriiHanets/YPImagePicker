@@ -34,7 +34,7 @@ open class YPBottomPager: BaseViewController, UIScrollViewDelegate {
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !rotationInProgress else { return }
+        guard !rotationInProgress && !shouldChangeOrientation else { return }
         
         delegate?.pagerScrollViewDidScroll(scrollView)
     }
