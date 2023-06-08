@@ -24,29 +24,11 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
         DispatchQueue.main.async {
             let collectionView = self.v.collectionView
             self.mediaManager.fetchResult = collectionChanges.fetchResultAfterChanges
-            if !collectionChanges.hasIncrementalChanges || collectionChanges.hasMoves {
-                collectionView.reloadData()
-            } else {
-                collectionView.performBatchUpdates({
-                    if let removedIndexes = collectionChanges.removedIndexes,
-                       removedIndexes.count != 0 {
-                        collectionView.deleteItems(at: removedIndexes.aapl_indexPathsFromIndexesWithSection(0))
-                    }
-
-                    if let insertedIndexes = collectionChanges.insertedIndexes, insertedIndexes.count != 0 {
-                        collectionView.insertItems(at: insertedIndexes.aapl_indexPathsFromIndexesWithSection(0))
-                    }
-                }, completion: { finished in
-                    guard finished,
-                          let changedIndexes = collectionChanges.changedIndexes,
-                          changedIndexes.count != 0 else {
-                        ypLog("Some problems there.")
-                        return
-                    }
-
-                    collectionView.reloadItems(at: changedIndexes.aapl_indexPathsFromIndexesWithSection(0))
-                })
-            }
+            
+            let currentAssetIds = self.mediaManager.fetchAssets?.map { $0.localIdentifier } ?? []
+            self.selectedItems.removeAll(where: { !currentAssetIds.contains($0.assetIdentifier) })
+            self.delegate?.libraryViewFinishedLoading()
+            collectionView.reloadData()
 
             self.updateAssetSelection()
             self.mediaManager.resetCachedAssets()
