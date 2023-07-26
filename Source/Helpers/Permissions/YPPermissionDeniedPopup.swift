@@ -18,15 +18,6 @@ internal struct YPPermissionDeniedPopup {
         )
         alert.addAction(
             UIAlertAction(
-                title: YPConfig.wordings.permissionPopup.cancel,
-                style: .default,
-                handler: { _ in
-                    cancelBlock()
-                }
-            )
-        )
-        alert.addAction(
-            UIAlertAction(
                 title: YPConfig.wordings.permissionPopup.grantPermission,
                 style: .default,
                 handler: { _ in
@@ -35,6 +26,15 @@ internal struct YPPermissionDeniedPopup {
                     } else {
                         UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
                     }
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: YPConfig.wordings.permissionPopup.cancel,
+                style: .default,
+                handler: { _ in
+                    cancelBlock()
                 }
             )
         )
@@ -51,15 +51,6 @@ internal struct YPPermissionDeniedPopup {
         )
         alert.addAction(
             UIAlertAction(
-                title: YPConfig.wordings.permissionPopup.cancel,
-                style: .default,
-                handler: { _ in
-                    cancelBlock()
-                }
-            )
-        )
-        alert.addAction(
-            UIAlertAction(
                 title: YPConfig.wordings.permissionPopup.grantPermission,
                 style: .default,
                 handler: { _ in
@@ -68,6 +59,15 @@ internal struct YPPermissionDeniedPopup {
                     } else {
                         UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
                     }
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: YPConfig.wordings.permissionPopup.cancel,
+                style: .default,
+                handler: { _ in
+                    cancelBlock()
                 }
             )
         )
