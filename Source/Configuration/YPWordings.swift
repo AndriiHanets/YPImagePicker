@@ -14,8 +14,12 @@ public struct YPWordings {
     public var videoDurationPopup = VideoDurationPopup()
 
     public struct PermissionPopup {
-        public var title = ypLocalized("YPImagePickerPermissionDeniedPopupTitle")
-        public var message = ypLocalized("YPImagePickerPermissionDeniedPopupMessage")
+        public var photoTitle = ypLocalized("YPImagePickerPermissionDeniedPopupPhotoTitle")
+        public var cameraTitle = ypLocalized("YPImagePickerPermissionDeniedPopupCameraTitle")
+        
+        public var photoMessage = ypLocalized("YPImagePickerPermissionDeniedPopupPhotoMessage")
+        public var cameraMessage = ypLocalized("YPImagePickerPermissionDeniedPopupCameraMessage")
+        
         public var cancel = ypLocalized("YPImagePickerPermissionDeniedPopupCancel")
         public var grantPermission = ypLocalized("YPImagePickerPermissionDeniedPopupGrantPermission")
     }

@@ -9,8 +9,10 @@
 "YPImagePickerOk" = "Ok";
 "YPImagePickerPermissionDeniedPopupCancel" = "Cancel";
 "YPImagePickerPermissionDeniedPopupGrantPermission" = "Grant Permission";
-"YPImagePickerPermissionDeniedPopupMessage" = "Please allow access";
-"YPImagePickerPermissionDeniedPopupTitle" = "Permission denied";
+"YPImagePickerPermissionDeniedPopupPhotoTitle" = "Please allow access";
+"YPImagePickerPermissionDeniedPopupPhotoMessage" = "Permission denied";
+"YPImagePickerPermissionDeniedPopupCameraTitle" = "Please allow access";
+"YPImagePickerPermissionDeniedPopupCameraMessage" = "Permission denied";
 "YPImagePickerPhoto" = "Photo";
 "YPImagePickerProcessing" = "Processing..";
 "YPImagePickerSave" = "Save";

@@ -9,27 +9,69 @@
 import UIKit
 
 internal struct YPPermissionDeniedPopup {
-    static func buildGoToSettingsAlert(cancelBlock: @escaping () -> Void) -> UIAlertController {
-        let alert = UIAlertController(title:
-                                        YPConfig.wordings.permissionPopup.title,
-                                      message: YPConfig.wordings.permissionPopup.message,
-                                      preferredStyle: .alert)
+    static func buildGoToCameraSettingsAlert(cancelBlock: @escaping () -> Void) -> UIAlertController {
+        let alert = UIAlertController(
+            title:
+                YPConfig.wordings.permissionPopup.cameraTitle,
+            message: YPConfig.wordings.permissionPopup.cameraMessage,
+            preferredStyle: .alert
+        )
         alert.addAction(
-            UIAlertAction(title: YPConfig.wordings.permissionPopup.cancel,
-                          style: UIAlertAction.Style.cancel,
-                          handler: { _ in
-                            cancelBlock()
-                          }))
+            UIAlertAction(
+                title: YPConfig.wordings.permissionPopup.cancel,
+                style: .default,
+                handler: { _ in
+                    cancelBlock()
+                }
+            )
+        )
         alert.addAction(
-            UIAlertAction(title: YPConfig.wordings.permissionPopup.grantPermission,
-                          style: .default,
-                          handler: { _ in
-                            if #available(iOS 10.0, *) {
-                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                            } else {
-                                UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
-                            }
-                          }))
+            UIAlertAction(
+                title: YPConfig.wordings.permissionPopup.grantPermission,
+                style: .default,
+                handler: { _ in
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    } else {
+                        UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+                    }
+                }
+            )
+        )
+        
+        return alert
+    }
+    
+    static func buildGoToPhotoSettingsAlert(cancelBlock: @escaping () -> Void) -> UIAlertController {
+        let alert = UIAlertController(
+            title:
+                YPConfig.wordings.permissionPopup.photoTitle,
+            message: YPConfig.wordings.permissionPopup.photoMessage,
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: YPConfig.wordings.permissionPopup.cancel,
+                style: .default,
+                handler: { _ in
+                    cancelBlock()
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: YPConfig.wordings.permissionPopup.grantPermission,
+                style: .default,
+                handler: { _ in
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    } else {
+                        UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+                    }
+                }
+            )
+        )
+        
         return alert
     }
 }
