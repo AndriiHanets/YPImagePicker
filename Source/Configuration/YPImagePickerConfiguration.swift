@@ -143,7 +143,7 @@ public struct YPImagePickerConfiguration {
         YPFilter(name: "XRay", coreImageFilterName: "CIXRay")
         ]
     
-    var onLogTriggered: ((String) -> Void)?
+    public var onLogTriggered: ((String) -> Void)?
     
     /// Migration
     
