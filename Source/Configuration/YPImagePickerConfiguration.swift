@@ -143,6 +143,8 @@ public struct YPImagePickerConfiguration {
         YPFilter(name: "XRay", coreImageFilterName: "CIXRay")
         ]
     
+    var onLogTriggered: ((String) -> Void)?
+    
     /// Migration
     
     @available(iOS, obsoleted: 3.0.0, renamed: "video.compression")

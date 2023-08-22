@@ -158,10 +158,6 @@ open class YPImagePicker: UINavigationController {
         }
     }
     
-    deinit {
-        ypLog("Picker deinited 👍")
-    }
-    
     private func setupLoadingView() {
         view.sv(
             loadingView

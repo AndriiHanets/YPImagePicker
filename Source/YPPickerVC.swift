@@ -313,7 +313,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     // When pressing "Next"
     @objc
     func done() {
-        guard let libraryVC = libraryVC else { ypLog("YPLibraryVC deallocated"); return }
+        guard let libraryVC = libraryVC else { return }
         
         if mode == .library {
             libraryVC.selectedMedia(photoCallback: { [weak self] photo in

@@ -616,6 +616,5 @@ internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
     
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
-        ypLog("\(type(of: self)) deinited 👌🏻")
     }
 }
