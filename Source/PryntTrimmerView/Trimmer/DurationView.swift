@@ -93,6 +93,9 @@ extension TimeInterval {
     var minuteSecondMS: String {
         String(format: "%d:%02d.%02d", minute, second, millisecond)
     }
+    var minuteSecond: String {
+        String(format: "%d:%02d", minute, second)
+    }
     var hour: Int {
         Int((self/3600).truncatingRemainder(dividingBy: 3600))
     }

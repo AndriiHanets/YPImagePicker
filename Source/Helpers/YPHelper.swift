@@ -61,9 +61,10 @@ struct YPHelper {
     }
     
     static func formattedStrigFrom(_ timeInterval: TimeInterval) -> String {
-        let interval = Int(timeInterval)
-        let seconds = interval % 60
-        let minutes = (interval / 60) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        if timeInterval.hour > 0 {
+            return timeInterval.hourMinuteSecond
+        } else {
+            return timeInterval.minuteSecond
+        }
     }
 }
