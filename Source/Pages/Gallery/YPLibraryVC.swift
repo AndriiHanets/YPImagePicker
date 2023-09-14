@@ -459,10 +459,11 @@ internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
                                                callback: @escaping (_ videoURL: URL?) -> Void) {
         delegate?.libraryViewDidTapNext()
         let timeDuration = CMTimeMakeWithSeconds(duration, preferredTimescale: 1000)
-        mediaManager.fetchVideoUrlAndCropWithDuration(for: asset,
-                                                      cropRect: rect,
-                                                      duration: timeDuration,
-                                                      callback: callback)
+//        mediaManager.fetchVideoUrlAndCropWithDuration(for: asset,
+//                                                      cropRect: rect,
+//                                                      duration: timeDuration,
+//                                                      callback: callback)
+        mediaManager.fetchVideoUrl(for: asset, callback: callback)
     }
     
     public func selectedMedia(photoCallback: @escaping (_ photo: YPMediaPhoto) -> Void,

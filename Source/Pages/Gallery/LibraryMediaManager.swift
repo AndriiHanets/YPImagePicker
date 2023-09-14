@@ -92,108 +92,153 @@ class LibraryMediaManager {
     func fetchVideoUrlAndCrop(for videoAsset: PHAsset,
                               cropRect: CGRect,
                               callback: @escaping (_ videoURL: URL?) -> Void) {
-        fetchVideoUrlAndCropWithDuration(for: videoAsset, cropRect: cropRect, duration: nil, callback: callback)
+//        fetchVideoUrlAndCropWithDuration(for: videoAsset, cropRect: cropRect, duration: nil, callback: callback)
+        fetchVideoUrl(for: videoAsset, callback: callback)
     }
     
-    func fetchVideoUrlAndCropWithDuration(for videoAsset: PHAsset,
-                                          cropRect: CGRect,
-                                          duration: CMTime?,
-                                          callback: @escaping (_ videoURL: URL?) -> Void) {
+//    func fetchVideoUrlAndCropWithDuration(for videoAsset: PHAsset,
+//                                          cropRect: CGRect,
+//                                          duration: CMTime?,
+//                                          callback: @escaping (_ videoURL: URL?) -> Void) {
+//        let videosOptions = PHVideoRequestOptions()
+//        videosOptions.isNetworkAccessAllowed = true
+//        videosOptions.deliveryMode = .highQualityFormat
+//        imageManager?.requestAVAsset(forVideo: videoAsset, options: videosOptions) { asset, _, _ in
+//            do {
+//                guard let asset = asset else { ypLog("Don't have the asset"); return }
+//
+//                let assetComposition = AVMutableComposition()
+//                let assetMaxDuration = self.getMaxVideoDuration(between: duration, andAssetDuration: asset.duration)
+//                let trackTimeRange = CMTimeRangeMake(start: CMTime.zero, duration: assetMaxDuration)
+//
+//                // 1. Inserting audio and video tracks in composition
+//
+//                guard let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first,
+//                      let videoCompositionTrack = assetComposition
+//                        .addMutableTrack(withMediaType: .video,
+//                                         preferredTrackID: kCMPersistentTrackID_Invalid) else {
+//                    ypLog("Problems with video track")
+//                    return
+//
+//                }
+//                if let audioTrack = asset.tracks(withMediaType: AVMediaType.audio).first,
+//                   let audioCompositionTrack = assetComposition
+//                    .addMutableTrack(withMediaType: AVMediaType.audio,
+//                                     preferredTrackID: kCMPersistentTrackID_Invalid) {
+//                    try audioCompositionTrack.insertTimeRange(trackTimeRange, of: audioTrack, at: CMTime.zero)
+//                }
+//
+//                try videoCompositionTrack.insertTimeRange(trackTimeRange, of: videoTrack, at: CMTime.zero)
+//
+//                // Layer Instructions
+//                let layerInstructions = AVMutableVideoCompositionLayerInstruction(assetTrack: videoCompositionTrack)
+//                var transform = videoTrack.preferredTransform
+//                let videoSize = videoTrack.naturalSize.applying(transform)
+//                transform.tx = (videoSize.width < 0) ? abs(videoSize.width) : 0.0
+//                transform.ty = (videoSize.height < 0) ? abs(videoSize.height) : 0.0
+//                transform.tx -= cropRect.minX
+//                transform.ty -= cropRect.minY
+//                layerInstructions.setTransform(transform, at: CMTime.zero)
+//                videoCompositionTrack.preferredTransform = transform
+//
+//                // CompositionInstruction
+//                let mainInstructions = AVMutableVideoCompositionInstruction()
+//                mainInstructions.timeRange = trackTimeRange
+//                mainInstructions.layerInstructions = [layerInstructions]
+//
+//                // Video Composition
+//                let videoComposition = AVMutableVideoComposition(propertiesOf: asset)
+//                videoComposition.instructions = [mainInstructions]
+//                videoComposition.renderSize = cropRect.size // needed?
+//
+//                // 5. Configuring export session
+//
+//                let fileURL = URL(fileURLWithPath: NSTemporaryDirectory())
+//                    .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
+//                let exportSession = assetComposition
+//                    .export(to: fileURL,
+//                            videoComposition: videoComposition,
+//                            removeOldFile: true) { [weak self] session in
+//                        DispatchQueue.main.async {
+//                            switch session.status {
+//                            case .completed:
+//                                if let url = session.outputURL {
+//                                    if let index = self?.currentExportSessions.firstIndex(of: session) {
+//                                        self?.currentExportSessions.remove(at: index)
+//                                    }
+//                                    callback(url)
+//                                } else {
+//                                    ypLog("Don't have URL.")
+//                                    callback(nil)
+//                                }
+//                            case .failed:
+//                                ypLog("Export of the video failed : \(String(describing: session.error))")
+//                                callback(nil)
+//                            default:
+//                                ypLog("Export session completed with \(session.status) status. Not handled.")
+//                                callback(nil)
+//                            }
+//                        }
+//                    }
+//
+//                // 6. Exporting
+//                DispatchQueue.main.async {
+//                    self.exportTimer = Timer.scheduledTimer(timeInterval: 0.1,
+//                                                            target: self,
+//                                                            selector: #selector(self.onTickExportTimer),
+//                                                            userInfo: exportSession,
+//                                                            repeats: true)
+//                }
+//
+//                if let s = exportSession {
+//                    self.currentExportSessions.append(s)
+//                }
+//            } catch let error {
+//                ypLog("Error: \(error)")
+//            }
+//        }
+//    }
+    
+    func fetchVideoUrl(
+        for videoAsset: PHAsset,
+        callback: @escaping (_ videoURL: URL?) -> Void
+    ) {
         let videosOptions = PHVideoRequestOptions()
+        videosOptions.version = .current
         videosOptions.isNetworkAccessAllowed = true
         videosOptions.deliveryMode = .highQualityFormat
-        imageManager?.requestAVAsset(forVideo: videoAsset, options: videosOptions) { asset, _, _ in
-            do {
-                guard let asset = asset else { ypLog("Don't have the asset"); return }
-                
-                let assetComposition = AVMutableComposition()
-                let assetMaxDuration = self.getMaxVideoDuration(between: duration, andAssetDuration: asset.duration)
-                let trackTimeRange = CMTimeRangeMake(start: CMTime.zero, duration: assetMaxDuration)
-                
-                // 1. Inserting audio and video tracks in composition
-                
-                guard let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first,
-                      let videoCompositionTrack = assetComposition
-                        .addMutableTrack(withMediaType: .video,
-                                         preferredTrackID: kCMPersistentTrackID_Invalid) else {
-                    ypLog("Problems with video track")
-                    return
-
-                }
-                if let audioTrack = asset.tracks(withMediaType: AVMediaType.audio).first,
-                   let audioCompositionTrack = assetComposition
-                    .addMutableTrack(withMediaType: AVMediaType.audio,
-                                     preferredTrackID: kCMPersistentTrackID_Invalid) {
-                    try audioCompositionTrack.insertTimeRange(trackTimeRange, of: audioTrack, at: CMTime.zero)
-                }
-                
-                try videoCompositionTrack.insertTimeRange(trackTimeRange, of: videoTrack, at: CMTime.zero)
-                
-                // Layer Instructions
-                let layerInstructions = AVMutableVideoCompositionLayerInstruction(assetTrack: videoCompositionTrack)
-                var transform = videoTrack.preferredTransform
-                let videoSize = videoTrack.naturalSize.applying(transform)
-                transform.tx = (videoSize.width < 0) ? abs(videoSize.width) : 0.0
-                transform.ty = (videoSize.height < 0) ? abs(videoSize.height) : 0.0
-                transform.tx -= cropRect.minX
-                transform.ty -= cropRect.minY
-                layerInstructions.setTransform(transform, at: CMTime.zero)
-                videoCompositionTrack.preferredTransform = transform
-                
-                // CompositionInstruction
-                let mainInstructions = AVMutableVideoCompositionInstruction()
-                mainInstructions.timeRange = trackTimeRange
-                mainInstructions.layerInstructions = [layerInstructions]
-                
-                // Video Composition
-                let videoComposition = AVMutableVideoComposition(propertiesOf: asset)
-                videoComposition.instructions = [mainInstructions]
-                videoComposition.renderSize = cropRect.size // needed?
-                
-                // 5. Configuring export session
-                
-                let fileURL = URL(fileURLWithPath: NSTemporaryDirectory())
-                    .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
-                let exportSession = assetComposition
-                    .export(to: fileURL,
-                            videoComposition: videoComposition,
-                            removeOldFile: true) { [weak self] session in
-                        DispatchQueue.main.async {
-                            switch session.status {
-                            case .completed:
-                                if let url = session.outputURL {
-                                    if let index = self?.currentExportSessions.firstIndex(of: session) {
-                                        self?.currentExportSessions.remove(at: index)
-                                    }
-                                    callback(url)
-                                } else {
-                                    ypLog("Don't have URL.")
-                                    callback(nil)
-                                }
-                            case .failed:
-                                ypLog("Export of the video failed : \(String(describing: session.error))")
-                                callback(nil)
-                            default:
-                                ypLog("Export session completed with \(session.status) status. Not handled.")
-                                callback(nil)
-                            }
-                        }
-                    }
-
-                // 6. Exporting
+        
+        imageManager?.requestAVAsset(
+            forVideo: videoAsset,
+            options: videosOptions
+        ) { asset, _, _ in
+            if let urlAsset = asset as? AVURLAsset {
                 DispatchQueue.main.async {
-                    self.exportTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                            target: self,
-                                                            selector: #selector(self.onTickExportTimer),
-                                                            userInfo: exportSession,
-                                                            repeats: true)
+                    callback(urlAsset.url)
                 }
-
-                if let s = exportSession {
-                    self.currentExportSessions.append(s)
+            } else if let compositionAsset = asset as? AVComposition {
+                let exportService = AVAssetExportSession(
+                    asset: compositionAsset,
+                    presetName: AVAssetExportPresetHighestQuality
+                )
+                
+                let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
+                exportService?.outputURL = destinationURL
+                exportService?.outputFileType = YPConfig.video.fileType
+                exportService?.shouldOptimizeForNetworkUse = true
+                
+                try? FileManager.default.removeFileIfNecessary(at: destinationURL)
+                
+                exportService?.exportAsynchronously {
+                    DispatchQueue.main.async {
+                        callback(exportService?.outputURL)
+                    }
                 }
-            } catch let error {
-                ypLog("Error: \(error)")
+                
+            } else {
+                DispatchQueue.main.async {
+                    callback(nil)
+                }
             }
         }
     }
