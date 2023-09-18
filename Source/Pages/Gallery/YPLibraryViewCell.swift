@@ -8,6 +8,7 @@
 
 import UIKit
 import Stevia
+import Photos
 
 class YPMultipleSelectionIndicator: UIView {
     
@@ -56,10 +57,13 @@ class YPMultipleSelectionIndicator: UIView {
 class YPLibraryViewCell: UICollectionViewCell {
     
     var representedAssetIdentifier: String!
+    var representedAssetRequestId: PHImageRequestID?
     let imageView = UIImageView()
     let durationLabel = UILabel()
     let selectionOverlay = UIView()
     let multipleSelectionIndicator = YPMultipleSelectionIndicator()
+    
+    var shouldCancelRequest: ((PHImageRequestID) -> Void)?
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     override init(frame: CGRect) {
@@ -112,5 +116,13 @@ class YPLibraryViewCell: UICollectionViewCell {
         isAccessibilityElement = true
         self.accessibilityIdentifier = "YPLibraryViewCell"
         self.accessibilityLabel = "Library Image"
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        guard let id = representedAssetRequestId else { return }
+        
+        shouldCancelRequest?(id)
     }
 }

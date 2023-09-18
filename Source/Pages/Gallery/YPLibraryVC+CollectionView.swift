@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 extension YPLibraryVC {
     var isLimitExceeded: Bool { return selectedItems.count >= YPConfig.library.maxNumberOfItems }
@@ -121,19 +122,30 @@ extension YPLibraryVC: UICollectionViewDelegate {
         guard let asset = mediaManager.getAsset(at: indexPath.item) else {
             return cell
         }
+        
+        cell.shouldCancelRequest = { [weak self] id in
+            self?.mediaManager.imageManager?.cancelImageRequest(id)
+        }
 
         cell.representedAssetIdentifier = asset.localIdentifier
         cell.multipleSelectionIndicator.selectionColor =
-            YPConfig.colors.multipleItemsSelectedCircleColor ?? YPConfig.colors.tintColor
-        mediaManager.imageManager?.requestImage(for: asset,
-                                   targetSize: v.cellSize(),
-                                   contentMode: .aspectFill,
-                                   options: nil) { image, _ in
-                                    // The cell may have been recycled when the time this gets called
-                                    // set image only if it's still showing the same asset.
-                                    if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
-                                        cell.imageView.image = image
-                                    }
+        YPConfig.colors.multipleItemsSelectedCircleColor ?? YPConfig.colors.tintColor
+        
+        DispatchQueue.global().async {
+            cell.representedAssetRequestId = self.mediaManager.imageManager?.requestImage(
+                for: asset,
+                targetSize: self.v.cellSize(),
+                contentMode: .aspectFill,
+                options: nil
+            ) { image, _ in
+                // The cell may have been recycled when the time this gets called
+                // set image only if it's still showing the same asset.
+                if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
+                    DispatchQueue.main.async {
+                        cell.imageView.image = image
+                    }
+                }
+            }
         }
         
         let isVideo = (asset.mediaType == .video)
