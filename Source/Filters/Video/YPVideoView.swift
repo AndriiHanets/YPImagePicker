@@ -121,6 +121,7 @@ extension YPVideoView {
     public func pause() {
         player.pause()
         showPlayImage(show: true)
+        removeReachEndObserver()
     }
     
     public func stop() {
