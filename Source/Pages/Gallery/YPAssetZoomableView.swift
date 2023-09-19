@@ -27,6 +27,10 @@ final class YPAssetZoomableView: UIScrollView {
     
     fileprivate var currentAsset: PHAsset?
     
+    var videoRequestId: PHImageRequestID?
+    var videoPreviewRequestId: PHImageRequestID?
+    var imageRequestId: PHImageRequestID?
+    
     // Image view of the asset for convenience. Can be video preview image view or photo image view.
     public var assetImageView: UIImageView {
         return isVideoMode ? videoView.previewImageView : photoImageView
@@ -75,9 +79,23 @@ final class YPAssetZoomableView: UIScrollView {
                          storedCropPosition: YPLibrarySelection?,
                          completion: @escaping () -> Void,
                          updateCropInfo: @escaping () -> Void) {
-        mediaManager.imageManager?.fetchPreviewFor(video: video) { [weak self] preview in
-            guard let strongSelf = self else { return }
-            guard strongSelf.currentAsset != video else { completion() ; return }
+        videoView.deallocate()
+        
+        if let videoPreviewRequestId = videoPreviewRequestId {
+            mediaManager.imageManager?.cancelImageRequest(videoPreviewRequestId)
+        }
+        if let videoRequestId = videoRequestId {
+            mediaManager.imageManager?.cancelImageRequest(videoRequestId)
+        }
+        
+        videoPreviewRequestId = mediaManager.imageManager?.fetchPreviewFor(video: video) { [weak self] preview in
+            guard
+                let strongSelf = self,
+                strongSelf.currentAsset != video
+            else {
+                completion()
+                return
+            }
             
             if strongSelf.videoView.isDescendant(of: strongSelf) == false {
                 strongSelf.isVideoMode = true
@@ -98,7 +116,8 @@ final class YPAssetZoomableView: UIScrollView {
                 updateCropInfo()
             }
         }
-        mediaManager.imageManager?.fetchPlayerItem(for: video) { [weak self] playerItem in
+        
+        videoRequestId = mediaManager.imageManager?.fetchPlayerItem(for: video) { [weak self] playerItem in
             guard let strongSelf = self else { return }
             guard strongSelf.currentAsset != video else { completion() ; return }
             strongSelf.currentAsset = video
@@ -120,7 +139,10 @@ final class YPAssetZoomableView: UIScrollView {
         }
         currentAsset = photo
         
-        mediaManager.imageManager?.fetch(photo: photo) { [weak self] image, isLowResIntermediaryImage in
+        if let imageRequestId = imageRequestId {
+            mediaManager.imageManager?.cancelImageRequest(imageRequestId)
+        }
+        imageRequestId = mediaManager.imageManager?.fetch(photo: photo) { [weak self] image, isLowResIntermediaryImage in
             guard let strongSelf = self else { return }
             
             if strongSelf.photoImageView.isDescendant(of: strongSelf) == false {

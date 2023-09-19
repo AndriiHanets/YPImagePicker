@@ -55,43 +55,47 @@ extension PHCachingImageManager {
         return [:]
     }
     
-    func fetchPreviewFor(video asset: PHAsset, callback: @escaping (UIImage) -> Void) {
+    func fetchPreviewFor(video asset: PHAsset, callback: @escaping (UIImage) -> Void) -> PHImageRequestID {
         let options = PHImageRequestOptions()
         options.isNetworkAccessAllowed = true
-        options.isSynchronous = true
+//        options.isSynchronous = true
         let screenWidth = YPImagePickerConfiguration.screenWidth
         let ts = CGSize(width: screenWidth, height: screenWidth)
-        requestImage(for: asset, targetSize: ts, contentMode: .aspectFill, options: options) { image, _ in
+        let id = requestImage(for: asset, targetSize: ts, contentMode: .aspectFill, options: options) { image, _ in
             if let image = image {
                 DispatchQueue.main.async {
                     callback(image)
                 }
             }
         }
+        
+        return id
     }
     
-    func fetchPlayerItem(for video: PHAsset, callback: @escaping (AVPlayerItem) -> Void) {
+    func fetchPlayerItem(for video: PHAsset, callback: @escaping (AVPlayerItem) -> Void) -> PHImageRequestID {
         let videosOptions = PHVideoRequestOptions()
         videosOptions.deliveryMode = PHVideoRequestOptionsDeliveryMode.automatic
         videosOptions.isNetworkAccessAllowed = true
-        requestPlayerItem(forVideo: video, options: videosOptions, resultHandler: { playerItem, _ in
+        let id = requestPlayerItem(forVideo: video, options: videosOptions, resultHandler: { playerItem, _ in
             DispatchQueue.main.async {
                 if let playerItem = playerItem {
                     callback(playerItem)
                 }
             }
         })
+        
+        return id
     }
     
     /// This method return two images in the callback. First is with low resolution, second with high.
     /// So the callback fires twice.
-    func fetch(photo asset: PHAsset, callback: @escaping (UIImage, Bool) -> Void) {
+    func fetch(photo asset: PHAsset, callback: @escaping (UIImage, Bool) -> Void) -> PHImageRequestID {
         let options = PHImageRequestOptions()
 		// Enables gettings iCloud photos over the network, this means PHImageResultIsInCloudKey will never be true.
         options.isNetworkAccessAllowed = true
 		// Get 2 results, one low res quickly and the high res one later.
         options.deliveryMode = .opportunistic
-        requestImage(for: asset, targetSize: PHImageManagerMaximumSize,
+        let id = requestImage(for: asset, targetSize: PHImageManagerMaximumSize,
 					 contentMode: .aspectFill, options: options) { result, info in
             guard let image = result else {
                 ypLog("No Result 🛑")
@@ -102,5 +106,7 @@ extension PHCachingImageManager {
                 callback(image, isLowRes)
             }
         }
+        
+        return id
     }
 }
