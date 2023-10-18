@@ -192,43 +192,54 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
 
         navigationItem.rightBarButtonItem = YPLoaders.defaultLoader
 
-        do {
-            let asset = AVURLAsset(url: inputVideo.url)
-            let trimmedAsset = try asset
-                .assetByTrimming(startTime: trimmerView.startTime ?? CMTime.zero,
-                                 endTime: trimmerView.endTime ?? inputAsset.duration)
-            
-            // Looks like file:///private/var/mobile/Containers/Data/Application
-            // /FAD486B4-784D-4397-B00C-AD0EFFB45F52/tmp/8A2B410A-BD34-4E3F-8CB5-A548A946C1F1.mov
-            let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory())
-                .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
-            
-            _ = trimmedAsset.export(to: destinationURL) { [weak self] session in
-                switch session.status {
-                case .completed:
-                    DispatchQueue.main.async {
-                        if let coverImage = self?.coverImageView.image {
-                            let resultVideo = YPMediaVideo(
-                                thumbnail: coverImage,
-                                thumbnailOrigin: self?.inputVideo.thumbnailOrigin,
-                                videoURL: destinationURL,
-                                asset: self?.inputVideo.asset
-                            )
-                            (self?.inputVideo.url).map { try? FileManager.default.removeItem(at: $0) }
-                            didSave(YPMediaItem.video(v: resultVideo))
-                            self?.setupRightBarButtonItem()
-                        } else {
-                            ypLog("Don't have coverImage.")
+        if trimmerView.startTime == CMTime.zero && trimmerView.endTime == inputAsset.duration {
+            let resultVideo = YPMediaVideo(
+                thumbnail: coverImageView.image ?? UIImage(),
+                thumbnailOrigin: inputVideo.thumbnailOrigin,
+                videoURL: inputVideo.url,
+                asset: inputVideo.asset
+            )
+            didSave(YPMediaItem.video(v: resultVideo))
+            setupRightBarButtonItem()
+        } else {
+            do {
+                let asset = AVURLAsset(url: inputVideo.url)
+                let trimmedAsset = try asset
+                    .assetByTrimming(startTime: trimmerView.startTime ?? CMTime.zero,
+                                     endTime: trimmerView.endTime ?? inputAsset.duration)
+                
+                // Looks like file:///private/var/mobile/Containers/Data/Application
+                // /FAD486B4-784D-4397-B00C-AD0EFFB45F52/tmp/8A2B410A-BD34-4E3F-8CB5-A548A946C1F1.mov
+                let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory())
+                    .appendingUniquePathComponent(pathExtension: YPConfig.video.fileType.fileExtension)
+                
+                _ = trimmedAsset.export(to: destinationURL) { [weak self] session in
+                    switch session.status {
+                    case .completed:
+                        DispatchQueue.main.async {
+                            if let coverImage = self?.coverImageView.image {
+                                let resultVideo = YPMediaVideo(
+                                    thumbnail: coverImage,
+                                    thumbnailOrigin: self?.inputVideo.thumbnailOrigin,
+                                    videoURL: destinationURL,
+                                    asset: self?.inputVideo.asset
+                                )
+                                (self?.inputVideo.url).map { try? FileManager.default.removeItem(at: $0) }
+                                didSave(YPMediaItem.video(v: resultVideo))
+                                self?.setupRightBarButtonItem()
+                            } else {
+                                ypLog("Don't have coverImage.")
+                            }
                         }
+                    case .failed:
+                        ypLog("Export of the video failed. Reason: \(String(describing: session.error))")
+                    default:
+                        ypLog("Export session completed with \(session.status) status. Not handled")
                     }
-                case .failed:
-                    ypLog("Export of the video failed. Reason: \(String(describing: session.error))")
-                default:
-                    ypLog("Export session completed with \(session.status) status. Not handled")
                 }
+            } catch let error {
+                ypLog("Error: \(error)")
             }
-        } catch let error {
-            ypLog("Error: \(error)")
         }
     }
     
