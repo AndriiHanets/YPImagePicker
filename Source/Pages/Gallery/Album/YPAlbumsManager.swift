@@ -20,12 +20,20 @@ class YPAlbumsManager {
         }
         
         var albums = [YPAlbum]()
-        let smartAlbumsResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum,
-                                                                        subtype: .albumRegular,
-                                                                        options: nil)
-        let albumsResult = PHAssetCollection.fetchAssetCollections(with: .album,
-                                                                   subtype: .any,
-                                                                   options: nil)
+        let smartAlbumsResult = PHAssetCollection.fetchAssetCollections(
+            with: .smartAlbum,
+            subtype: .albumRegular,
+            options: nil
+        )
+        
+        let customAlbumssOptions = PHFetchOptions()
+        customAlbumssOptions.sortDescriptors = [NSSortDescriptor(key: "localizedTitle", ascending: true)]
+        let albumsResult = PHAssetCollection.fetchAssetCollections(
+            with: .album,
+            subtype: .any,
+            options: customAlbumssOptions
+        )
+        
         for result in [smartAlbumsResult, albumsResult] {
             result.enumerateObjects({ assetCollection, _, _ in
                 var album = YPAlbum()
