@@ -131,22 +131,22 @@ extension YPLibraryVC: UICollectionViewDelegate {
         cell.multipleSelectionIndicator.selectionColor =
         YPConfig.colors.multipleItemsSelectedCircleColor ?? YPConfig.colors.tintColor
         
-        DispatchQueue.global().async {
-            cell.representedAssetRequestId = self.mediaManager.imageManager?.requestImage(
-                for: asset,
-                targetSize: self.v.cellSize(),
-                contentMode: .aspectFill,
-                options: nil
-            ) { image, _ in
-                // The cell may have been recycled when the time this gets called
-                // set image only if it's still showing the same asset.
-                if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
-                    DispatchQueue.main.async {
-                        cell.imageView.image = image
-                    }
+        //        DispatchQueue.global().async {
+        cell.representedAssetRequestId = self.mediaManager.imageManager?.requestImage(
+            for: asset,
+            targetSize: self.v.cellSize(),
+            contentMode: .aspectFill,
+            options: nil
+        ) { image, _ in
+            // The cell may have been recycled when the time this gets called
+            // set image only if it's still showing the same asset.
+            if cell.representedAssetIdentifier == asset.localIdentifier {
+                DispatchQueue.main.async {
+                    cell.imageView.image = image
                 }
             }
         }
+        //        }
         
         let isVideo = (asset.mediaType == .video)
         cell.durationLabel.isHidden = !isVideo

@@ -121,6 +121,8 @@ class YPLibraryViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        imageView.image = nil
+        
         guard let id = representedAssetRequestId else { return }
         
         shouldCancelRequest?(id)
