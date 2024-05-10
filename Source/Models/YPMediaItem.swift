@@ -42,13 +42,15 @@ public class YPMediaVideo {
     public var url: URL
     public let fromCamera: Bool
     public var asset: PHAsset?
+    public var isTrimmed: Bool
 
-    public init(thumbnail: UIImage, thumbnailOrigin: UIImage? = nil, videoURL: URL, fromCamera: Bool = false, asset: PHAsset? = nil) {
+    public init(thumbnail: UIImage, thumbnailOrigin: UIImage? = nil, videoURL: URL, fromCamera: Bool = false, asset: PHAsset? = nil, isTrimmed: Bool = false) {
         self.thumbnail = thumbnail
         self.thumbnailOrigin = thumbnailOrigin
         self.url = videoURL
         self.fromCamera = fromCamera
         self.asset = asset
+        self.isTrimmed = isTrimmed
     }
 }
 

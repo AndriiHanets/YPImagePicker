@@ -222,7 +222,8 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
                                     thumbnail: coverImage,
                                     thumbnailOrigin: self?.inputVideo.thumbnailOrigin,
                                     videoURL: destinationURL,
-                                    asset: self?.inputVideo.asset
+                                    asset: self?.inputVideo.asset,
+                                    isTrimmed: true
                                 )
                                 (self?.inputVideo.url).map { try? FileManager.default.removeItem(at: $0) }
                                 didSave(YPMediaItem.video(v: resultVideo))
