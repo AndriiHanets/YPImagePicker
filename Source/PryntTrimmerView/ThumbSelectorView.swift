@@ -32,8 +32,6 @@ public class ThumbSelectorView: AVAssetTimeSelector {
     private var leftThumbConstraint: NSLayoutConstraint?
     private var currentThumbConstraint: CGFloat = 0
 
-    private var generator: AVAssetImageGenerator?
-
     public weak var delegate: ThumbSelectorViewDelegate?
 
     // MARK: - View & constraints configurations
@@ -42,6 +40,17 @@ public class ThumbSelectorView: AVAssetTimeSelector {
         super.setupSubviews()
         setupDimmingView()
         setupThumbView()
+    }
+    
+    func setInitialPosition(time: CMTime) {
+        let position = getPosition(from: time)
+        
+        delegate?.didChangeThumbPosition(time)
+        leftThumbConstraint?.constant = position ?? .zero
+    }
+    
+    func setThumbImageView(with image: UIImage) {
+        thumbView.image = image
     }
 
     private func setupDimmingView() {
@@ -108,47 +117,8 @@ public class ThumbSelectorView: AVAssetTimeSelector {
     // MARK: - Thumbnail Generation
 
     override func assetDidChange(newAsset: AVAsset?) {
-        if let asset = newAsset {
-            setupThumbnailGenerator(with: asset)
-            leftThumbConstraint?.constant = 0
-            updateSelectedTime()
-        }
+        leftThumbConstraint?.constant = 0
         super.assetDidChange(newAsset: newAsset)
-    }
-
-    private func setupThumbnailGenerator(with asset: AVAsset) {
-        generator = AVAssetImageGenerator(asset: asset)
-        generator?.appliesPreferredTrackTransform = true
-        generator?.requestedTimeToleranceAfter = CMTime.zero
-        generator?.requestedTimeToleranceBefore = CMTime.zero
-        generator?.maximumSize = getThumbnailFrameSize(from: asset) ?? CGSize.zero
-    }
-
-    private func getThumbnailFrameSize(from asset: AVAsset) -> CGSize? {
-        guard let track = asset.tracks(withMediaType: AVMediaType.video).first else { return nil}
-
-        let assetSize = track.naturalSize.applying(track.preferredTransform)
-
-        let maxDimension = max(assetSize.width, assetSize.height)
-        let minDimension = min(assetSize.width, assetSize.height)
-        let ratio = maxDimension / minDimension
-        let side = thumbView.frame.height * ratio * UIScreen.main.scale
-        return CGSize(width: side, height: side)
-    }
-
-    private func generateThumbnailImage(for time: CMTime) {
-
-        generator?.generateCGImagesAsynchronously(forTimes: [NSValue(time: time)],
-                                                  completionHandler: { (_, image, _, _, _) in
-            guard let image = image else {
-                return
-            }
-            DispatchQueue.main.async {
-                self.generator?.cancelAllCGImageGeneration()
-                let uiimage = UIImage(cgImage: image)
-                self.thumbView.image = uiimage
-            }
-        })
     }
 
     // MARK: - Time & Position Equivalence
@@ -166,7 +136,6 @@ public class ThumbSelectorView: AVAssetTimeSelector {
     private func updateSelectedTime() {
         if let selectedTime = selectedTime {
             delegate?.didChangeThumbPosition(selectedTime)
-            generateThumbnailImage(for: selectedTime)
         }
     }
 

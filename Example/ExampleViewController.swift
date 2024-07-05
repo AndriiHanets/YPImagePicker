@@ -106,7 +106,7 @@ class ExampleViewController: UIViewController {
         config.library.minWidthForItem = nil
         config.library.mediaType = .photoAndVideo
         config.library.defaultMultipleSelection = true
-        config.library.maxNumberOfItems = 3
+        config.library.maxNumberOfItems = 100
         config.library.minNumberOfItems = 1
         config.library.numberOfItemsInRow = 4
         config.library.spacingBetweenItems = 1.0
@@ -115,7 +115,7 @@ class ExampleViewController: UIViewController {
         config.library.singleTapToDeselect = true
         config.library.preSelectItemOnMultipleSelection = false
         
-        config.video.compression = AVAssetExportPresetPassthrough
+        config.video.compression = AVAssetExportPresetHighestQuality
         config.video.fileType = .mov
         
         config.video.recordingTimeLimit = 100
@@ -175,10 +175,13 @@ class ExampleViewController: UIViewController {
             break
         }
         
-        let videoEditor = YPVideoFiltersVC.initWith(
-            video: YPMediaVideo(thumbnail: video.thumbnail, videoURL: video.url),
-            isFromSelectionVC: true
+        let videoEditorConfiguration = YPVideoEditorConfiguration(
+            video: video,
+            isFromSelectionVC: true,
+            screens: [.trim, .coverPicker],
+            startOnScreen: .coverPicker
         )
+        let videoEditor = YPVideoFiltersVC.initWith(configuration: videoEditorConfiguration)
         
         let navVC = UINavigationController(rootViewController: videoEditor)
         navVC.navigationBar.isTranslucent = false

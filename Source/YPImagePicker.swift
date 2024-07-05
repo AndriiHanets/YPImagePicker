@@ -145,8 +145,13 @@ open class YPImagePicker: UINavigationController {
                 }
             case .video(let video):
                 if YPConfig.showsVideoTrimmer {
-                    let videoFiltersVC = YPVideoFiltersVC.initWith(video: video,
-                                                                   isFromSelectionVC: false)
+                    let configuration = YPVideoEditorConfiguration(
+                        video: video,
+                        isFromSelectionVC: false,
+                        screens: [.trim],
+                        startOnScreen: .trim
+                    )
+                    let videoFiltersVC = YPVideoFiltersVC.initWith(configuration: configuration)
                     videoFiltersVC.didSave = { [weak self] outputMedia in
                         self?.didSelect(items: [outputMedia])
                     }

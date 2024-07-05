@@ -120,7 +120,13 @@ extension YPSelectionsGalleryVC: UICollectionViewDelegate {
             }
         case .video(let video):
             if YPConfig.showsVideoTrimmer {
-                mediaFilterVC = YPVideoFiltersVC.initWith(video: video, isFromSelectionVC: true)
+                let configuration = YPVideoEditorConfiguration(
+                    video: video,
+                    isFromSelectionVC: true,
+                    screens: [.trim],
+                    startOnScreen: .trim
+                )
+                mediaFilterVC = YPVideoFiltersVC.initWith(configuration: configuration)
             }
         }
         

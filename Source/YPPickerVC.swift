@@ -98,6 +98,8 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                 if let videoVC = videoVC {
                     vcs.append(videoVC)
                 }
+            default:
+                break
             }
         }
         controllers = vcs
@@ -111,6 +113,8 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                 mode = .camera
             case .video:
                 mode = .video
+            default:
+                break
             }
         }
         

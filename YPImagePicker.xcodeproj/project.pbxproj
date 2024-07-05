@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -58,6 +58,8 @@
 		AA69BCF222E601D100FBB925 /* YPDeviceOrientationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69BCF122E601D100FBB925 /* YPDeviceOrientationHelper.swift */; };
 		BC00A24829FC176600A5DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC00A24729FC176600A5DBF8 /* ViewController.swift */; };
 		BC00A24929FC176600A5DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC00A24729FC176600A5DBF8 /* ViewController.swift */; };
+		BC7BC9222C36B11100A7A012 /* YPVideoFiltersConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */; };
+		BC7BC9232C36B11100A7A012 /* YPVideoFiltersConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */; };
 		BCCCC1B3299289DB00678B48 /* CropMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B0299289DA00678B48 /* CropMaskView.swift */; };
 		BCCCC1B4299289DB00678B48 /* VideoCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B1299289DB00678B48 /* VideoCropView.swift */; };
 		BCCCC1B5299289DB00678B48 /* VideoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B2299289DB00678B48 /* VideoScrollView.swift */; };
@@ -283,6 +285,7 @@
 		99D1DC2A1F9788930047F0E0 /* YPImagePickerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPImagePickerConfiguration.swift; sourceTree = "<group>"; };
 		AA69BCF122E601D100FBB925 /* YPDeviceOrientationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPDeviceOrientationHelper.swift; sourceTree = "<group>"; };
 		BC00A24729FC176600A5DBF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPVideoFiltersConfiguration.swift; sourceTree = "<group>"; };
 		BCCCC1B0299289DA00678B48 /* CropMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropMaskView.swift; sourceTree = "<group>"; };
 		BCCCC1B1299289DB00678B48 /* VideoCropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCropView.swift; sourceTree = "<group>"; };
 		BCCCC1B2299289DB00678B48 /* VideoScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoScrollView.swift; sourceTree = "<group>"; };
@@ -421,6 +424,7 @@
 				99019E502018CDED007325C2 /* YPImageSize.swift */,
 				99019E522018CE19007325C2 /* YPPickerScreen.swift */,
 				99472DEC2056E33700419F9E /* YPWordings.swift */,
+				BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -939,6 +943,7 @@
 				99C6D6BF1F1FB5C100711DB2 /* YPGridView.swift in Sources */,
 				BCCCC1BE299289EC00678B48 /* HandlerView.swift in Sources */,
 				99C6D6D01F1FB5C100711DB2 /* YPVideoCaptureVC.swift in Sources */,
+				BC7BC9232C36B11100A7A012 /* YPVideoFiltersConfiguration.swift in Sources */,
 				EB473E25208E1DCA00D16105 /* AVCaptureSession+Extensions.swift in Sources */,
 				EBB0FF7A20877A7500C84E25 /* YPVideoView.swift in Sources */,
 				EB473E19208E198E00D16105 /* AVFileType+Extensions.swift in Sources */,
@@ -1061,6 +1066,7 @@
 				EBA37B8326F74CBA005DAAD4 /* CIImage+Extensions.swift in Sources */,
 				EBA37BAA26F74CBA005DAAD4 /* YPCameraVC.swift in Sources */,
 				EBA37B6526F74C9A005DAAD4 /* YPPickerVC.swift in Sources */,
+				BC7BC9222C36B11100A7A012 /* YPVideoFiltersConfiguration.swift in Sources */,
 				EBA37B9026F74CBA005DAAD4 /* AVMutableComposition+Extensions.swift in Sources */,
 				EBA37B6726F74CBA005DAAD4 /* YPFonts.swift in Sources */,
 				BCCCC1CE29928F2E00678B48 /* DurationView.swift in Sources */,

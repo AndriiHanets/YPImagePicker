@@ -39,19 +39,34 @@ public class YPMediaVideo {
     
     public var thumbnail: UIImage
     public var thumbnailOrigin: UIImage?
+    public var thumbnailTimestampMs: Int?
     public var url: URL
     public let fromCamera: Bool
     public var asset: PHAsset?
     public var isTrimmed: Bool
 
-    public init(thumbnail: UIImage, thumbnailOrigin: UIImage? = nil, videoURL: URL, fromCamera: Bool = false, asset: PHAsset? = nil, isTrimmed: Bool = false) {
+    var thumbnailTime: CMTime {
+        CMTimeMake(value: Int64(thumbnailTimestampMs ?? 0), timescale: 1000)
+    }
+    
+    public init(
+        thumbnail: UIImage,
+        thumbnailOrigin: UIImage? = nil,
+        thumbnailTimestampMs: Int? = nil,
+        videoURL: URL,
+        fromCamera: Bool = false,
+        asset: PHAsset? = nil,
+        isTrimmed: Bool = false
+    ) {
         self.thumbnail = thumbnail
         self.thumbnailOrigin = thumbnailOrigin
+        self.thumbnailTimestampMs = thumbnailTimestampMs
         self.url = videoURL
         self.fromCamera = fromCamera
         self.asset = asset
         self.isTrimmed = isTrimmed
     }
+    
 }
 
 public enum YPMediaItem {
