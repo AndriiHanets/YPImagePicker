@@ -347,7 +347,8 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
         guard
             let startTime = trimmerView.startTime,
             let endTime = trimmerView.endTime,
-            let selectedCoverTime = coverThumbSelectorView.selectedTime
+            let selectedCoverTime = coverThumbSelectorView.selectedTime,
+            selectedCoverTime.seconds != 0
         else { return .zero }
         
         if CMTimeCompare(selectedCoverTime, startTime) == -1 {
