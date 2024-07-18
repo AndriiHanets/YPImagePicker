@@ -87,6 +87,7 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
     }()
     
     var activeScreen: YPVideoEditorScreen!
+    var currentSelectedCoverTime: CMTime?
     
     // MARK: - Live cycle
     
@@ -420,15 +421,23 @@ extension YPVideoFiltersVC: TrimmerViewDelegate {
 
 // MARK: - ThumbSelectorViewDelegate
 extension YPVideoFiltersVC: ThumbSelectorViewDelegate {
+    
     public func didChangeThumbPosition(_ imageTime: CMTime) {
+        if currentSelectedCoverTime == imageTime {
+            imageGenerator?.cancelAllCGImageGeneration()
+        }
+        currentSelectedCoverTime = imageTime
+        
         imageGenerator?.generateCGImagesAsynchronously(
             forTimes: [NSValue(time: imageTime)],
             completionHandler: { (_, cgImage, _, _, _) in
                 guard let cgImage = cgImage else {
                     return
                 }
-                
-                self.imageGenerator?.cancelAllCGImageGeneration()
+
+                if self.currentSelectedCoverTime != imageTime {
+                    self.imageGenerator?.cancelAllCGImageGeneration()
+                }
                 
                 DispatchQueue.main.async {
                     let image = UIImage(cgImage: cgImage)
@@ -442,4 +451,5 @@ extension YPVideoFiltersVC: ThumbSelectorViewDelegate {
             }
         )
     }
+    
 }
