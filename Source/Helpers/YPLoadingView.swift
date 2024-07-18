@@ -11,7 +11,7 @@ import Stevia
 
 class YPLoadingView: UIView {
     
-    let spinner = UIActivityIndicatorView(style: .whiteLarge)
+    let spinner = UIActivityIndicatorView(style: .gray)
     let processingLabel = UILabel()
     
     convenience init() {
@@ -47,6 +47,18 @@ class YPLoadingView: UIView {
         } else {
             spinner.stopAnimating()
             alpha = 0
+        }
+    }
+    
+    func setState(isLoading: Bool) {
+        DispatchQueue.main.async {
+            if isLoading {
+                self.spinner.startAnimating()
+                self.alpha = 1
+            } else {
+                self.spinner.stopAnimating()
+                self.alpha = 0
+            }
         }
     }
 }

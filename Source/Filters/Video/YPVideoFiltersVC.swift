@@ -35,6 +35,7 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
     
     private var playbackTimeCheckerTimer: Timer?
     private var imageGenerator: AVAssetImageGenerator?
+    private let loadingView = YPLoadingView()
     
     private let trimmerContainerView: UIView = {
         let v = UIView()
@@ -98,6 +99,7 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
         setupPages()
         view.backgroundColor = YPConfig.colors.filterBackgroundColor
         setupNavigationBar()
+        setState(isLoading: true)
         
         // Remove the default and add a notification to repeat playback from the start
         videoView.removeReachEndObserver()
@@ -173,9 +175,14 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
             trimmerContainerView.sv(
                 trimmerView,
                 coverThumbSelectorView
-            )
+            ),
+            loadingView
         )
         [trimBottomItem, coverBottomItem].forEach { bottomMenuStackView.addArrangedSubview($0) }
+        
+        loadingView.fillContainer()
+        loadingView.processingLabel.isHidden = true
+        loadingView.backgroundColor = .clear
         
         //        trimBottomItem.leading(0).height(40)
         //        trimBottomItem.Bottom == view.safeAreaLayoutGuide.Bottom
@@ -223,6 +230,12 @@ public final class YPVideoFiltersVC: BaseViewController, IsMediaFilterVC {
         
         activeScreen = configuration.startOnScreen
         updateScreenState(activeScreen)
+    }
+    
+    private func setState(isLoading: Bool) {
+        DispatchQueue.main.async {
+            self.loadingView.setState(isLoading: isLoading)
+        }
     }
     
     // MARK: - Actions
@@ -431,6 +444,9 @@ extension YPVideoFiltersVC: ThumbSelectorViewDelegate {
         imageGenerator?.generateCGImagesAsynchronously(
             forTimes: [NSValue(time: imageTime)],
             completionHandler: { (_, cgImage, _, _, _) in
+                
+                self.setState(isLoading: false)
+                
                 guard let cgImage = cgImage else {
                     return
                 }
