@@ -10,7 +10,81 @@ import UIKit
 import Photos
 
 extension YPLibraryVC {
-    var isLimitExceeded: Bool { return selectedItems.count >= YPConfig.library.maxNumberOfItems }
+    var isLimitExceeded: Bool {
+        let videoCount = selectedItems.filter { $0.isVideo }.count
+        let imageCount = selectedItems.filter { !$0.isVideo }.count
+        
+        switch YPConfig.library.maxNumberOfItemsType {
+        case .image(let count):
+            return imageCount >= count
+        case .video(let count):
+            return videoCount >= count
+        case .imageOrVideo(let _imageCount, let _videoCount):
+            var isInvalidImageCount = imageCount >= _imageCount
+            if imageCount > 0 {
+                isInvalidImageCount = isInvalidImageCount || videoCount != 0
+            }
+            
+            var isInvalidVideoCount = videoCount >= _videoCount
+            if videoCount > 0 {
+                isInvalidVideoCount = isInvalidVideoCount || imageCount != 0
+            }
+            
+            return isInvalidImageCount || isInvalidVideoCount
+        case .imageAndVideo(let count):
+            return (imageCount + videoCount) >= count
+        }
+    }
+    
+    var isValidSelectionMinCount: Bool {
+        switch YPConfig.library.minNumberOfItemsType {
+        case .image, .video, .imageAndVideo:
+            return selectedItems.count >= YPConfig.library.minNumberOfItems
+        case .imageOrVideo(let _imageCount, let _videoCount):
+            let videoCount = selectedItems.filter { $0.isVideo }.count
+            let imageCount = selectedItems.filter { !$0.isVideo }.count
+            
+            var isValidImageCount = imageCount <= _imageCount && imageCount != 0
+            if imageCount > 0 {
+                isValidImageCount = isValidImageCount && videoCount == 0
+            }
+            
+            var isValidVideoCount = videoCount <= _videoCount && videoCount != 0
+            if videoCount > 0 {
+                isValidVideoCount = isValidVideoCount && imageCount == 0
+            }
+            
+            return isValidImageCount || isValidVideoCount
+        }
+    }
+    
+//    func canSelect(newSelection: YPLibrarySelection) -> Bool {
+//        let selectedItems = self.selectedItems + [newSelection]
+//        
+//        let videoCount = selectedItems.filter { $0.isVideo }.count
+//        let imageCount = selectedItems.filter { !$0.isVideo }.count
+//        
+//        switch YPConfig.library.maxNumberOfItemsType {
+//        case .image(let count):
+//            return imageCount <= count
+//        case .video(let count):
+//            return videoCount <= count
+//        case .imageOrVideo(let _imageCount, let _videoCount):
+//            var isValidImageCount = imageCount <= _imageCount
+//            if imageCount > 0 {
+//                isValidImageCount = isValidImageCount && videoCount == 0
+//            }
+//            
+//            var isValidVideoCount = videoCount <= _videoCount
+//            if videoCount > 0 {
+//                isValidVideoCount = isValidVideoCount && imageCount == 0
+//            }
+//            
+//            return isValidImageCount || isValidVideoCount
+//        case .imageAndVideo(let count):
+//            return (imageCount + videoCount) <= count
+//        }
+//    }
     
     func setupCollectionView() {
         v.collectionView.dataSource = self
@@ -80,16 +154,26 @@ extension YPLibraryVC {
     
     /// Adds cell to selection
     func addToSelection(indexPath: IndexPath) {
-        if !(delegate?.libraryViewShouldAddToSelection(indexPath: indexPath,
-                                                       numSelections: selectedItems.count) ?? true) {
+        if !(delegate?.libraryViewShouldAddToSelection(indexPath: indexPath, numSelections: selectedItems.count) ?? true) {
             return
         }
+        
         guard let asset = mediaManager.getAsset(at: indexPath.item) else {
             print("No asset to add to selection.")
             return
         }
 
-        let newSelection = YPLibrarySelection(index: indexPath.row, assetIdentifier: asset.localIdentifier)
+        let newSelection = YPLibrarySelection(
+            index: indexPath.row,
+            assetIdentifier: asset.localIdentifier,
+            isVideo: asset.mediaType == .video
+        )
+        
+//        guard canSelect(newSelection: newSelection) else {
+//            checkLimit()
+//            return
+//        }
+        
         selectedItems.append(newSelection)
         checkLimit()
     }
@@ -158,11 +242,14 @@ extension YPLibraryVC: UICollectionViewDelegate {
         if let index = selectedItems.firstIndex(where: { $0.assetIdentifier == asset.localIdentifier }) {
             let currentSelection = selectedItems[index]
             if currentSelection.index < 0 {
-                selectedItems[index] = YPLibrarySelection(index: indexPath.row,
-                                                      cropRect: currentSelection.cropRect,
-                                                      scrollViewContentOffset: currentSelection.scrollViewContentOffset,
-                                                      scrollViewZoomScale: currentSelection.scrollViewZoomScale,
-                                                      assetIdentifier: currentSelection.assetIdentifier)
+                selectedItems[index] = YPLibrarySelection(
+                    index: indexPath.row,
+                    cropRect: currentSelection.cropRect,
+                    scrollViewContentOffset: currentSelection.scrollViewContentOffset,
+                    scrollViewZoomScale: currentSelection.scrollViewZoomScale,
+                    assetIdentifier: currentSelection.assetIdentifier,
+                    isVideo: currentSelection.isVideo
+                )
             }
             cell.multipleSelectionIndicator.set(number: index + 1) // start at 1, not 0
         } else {

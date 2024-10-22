@@ -62,18 +62,37 @@ internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
             maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
                 ? YPConfig.wordings.warningMaxPhotoLimit
                 : YPConfig.wordings.warningMaxPhotosLimit
+            
+            v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat, YPConfig.library.maxNumberOfItems)
         case .video:
             maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
                 ? YPConfig.wordings.warningMaxVideoLimit
                 : YPConfig.wordings.warningMaxVideosLimit
+            
+            v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat, YPConfig.library.maxNumberOfItems)
         case .photoAndVideo:
-            maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
-                ? YPConfig.wordings.warningMaxItemLimit
-                : YPConfig.wordings.warningMaxItemsLimit
+            switch YPConfig.library.maxNumberOfItemsType {
+            case .image(let count), .video(let count), .imageAndVideo(let count):
+                maxTimesLimitFormat = YPConfig.library.maxNumberOfItems == 1
+                    ? YPConfig.wordings.warningMaxPhotoOrVideoTotalLimit
+                    : YPConfig.wordings.warningMaxPhotosOrVideosTotalLimit
+                
+                v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat, count)
+            case .imageOrVideo(let imageCount, let videoCount):
+                if imageCount == 1 && videoCount == 1 {
+                    maxTimesLimitFormat = YPConfig.wordings.warningMaxPhotoAndVideoLimit
+                } else if imageCount == 1 && videoCount != 1 {
+                    maxTimesLimitFormat = YPConfig.wordings.warningMaxPhotoAndVideosLimit
+                } else if imageCount != 1 && videoCount == 1 {
+                    maxTimesLimitFormat = YPConfig.wordings.warningMaxPhotosAndVideoLimit
+                } else {
+                    maxTimesLimitFormat = YPConfig.wordings.warningMaxPhotosAndVideosLimit
+                }
+                
+                v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat, imageCount, videoCount)
+            }
+            
         }
-        
-        v.maxNumberWarningLabel.text = String(format: maxTimesLimitFormat,
-                                              YPConfig.library.maxNumberOfItems)
         
         if let preselectedItems = YPConfig.library.preselectedItems,
            !preselectedItems.isEmpty {
@@ -90,7 +109,11 @@ internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
                 }
                 
                 // The negative index will be corrected in the collectionView:cellForItemAt:
-                return YPLibrarySelection(index: -1, assetIdentifier: asset.localIdentifier)
+                return YPLibrarySelection(
+                    index: -1,
+                    assetIdentifier: asset.localIdentifier,
+                    isVideo: asset.mediaType == .video
+                )
             }
             
             isMultipleSelectionEnabled = true
@@ -205,7 +228,6 @@ internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
     func toggleMultipleSelection() {
         // Prevent desactivating multiple selection when using `minNumberOfItems`
         if YPConfig.library.minNumberOfItems > 1 && isMultipleSelectionEnabled {
-            print("Selected minNumberOfItems greater than one :\(YPConfig.library.minNumberOfItems). Don't deselecting multiple selection.")
             return
         }
 
@@ -218,11 +240,14 @@ internal final class YPLibraryVC: BaseViewController, YPPermissionCheckable {
                shouldSelectByDelegate,
                let asset = mediaManager.getAsset(at: currentlySelectedIndex) {
                 selectedItems = [
-                    YPLibrarySelection(index: currentlySelectedIndex,
-                                       cropRect: v.currentCropRect(),
-                                       scrollViewContentOffset: v.assetZoomableView.contentOffset,
-                                       scrollViewZoomScale: v.assetZoomableView.zoomScale,
-                                       assetIdentifier: asset.localIdentifier)
+                    YPLibrarySelection(
+                        index: currentlySelectedIndex,
+                        cropRect: v.currentCropRect(),
+                        scrollViewContentOffset: v.assetZoomableView.contentOffset,
+                        scrollViewZoomScale: v.assetZoomableView.zoomScale,
+                        assetIdentifier: asset.localIdentifier,
+                        isVideo: asset.mediaType == .video
+                    )
                 ]
             }
         } else {

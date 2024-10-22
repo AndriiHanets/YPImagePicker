@@ -19,8 +19,12 @@
 "YPImagePickerVideoDurationTitle" = "Duración del video";
 "YPImagePickerVideoTooLong" = "Elige un vídeo que dure menos de %@ segundos";
 "YPImagePickerVideoTooShort" = "El video debe durar como mínimo %@ segundos";
-"YPImagePickerWarningItemLimit" = "El límite es de %d foto o video";
-"YPImagePickerWarningItemsLimit" = "El límite es de %d fotos o videos";
+"YPImagePickerWarningPhotoOrVideoTotalLimit"= "El límite es de %d foto o video";
+"YPImagePickerWarningPhotosOrVideosTotalLimit" = "El límite es de %d fotos o videos";
+"YPImagePickerWarningPhotoOrVideoLimit" = "El límite es de %d foto o %d video";
+"YPImagePickerWarningPhotosOrVideosLimit" = "El límite es de %d fotos o %d videos";
+"YPImagePickerWarningPhotosOrVideoLimit" = "El límite es de %d fotos o %d video";
+"YPImagePickerWarningPhotoOrVideosLimit" = "El límite es de %d foto o %d videos";
 "YPImagePickerWarningVideosLimit" = "El límite es de %d videos";
 "YPImagePickerWarningPhotosLimit" = "El límite es de %d fotos";
 "YPImagePickerWarningVideoLimit" = "El límite es de %d video";

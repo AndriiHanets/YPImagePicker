@@ -283,8 +283,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
             navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
 
             // Disable Next Button until minNumberOfItems is reached.
-            navigationItem.rightBarButtonItem?.isEnabled =
-                libraryVC!.selectedItems.count >= YPConfig.library.minNumberOfItems
+            navigationItem.rightBarButtonItem?.isEnabled = libraryVC!.isValidSelectionMinCount
 
         case .camera:
             navigationItem.titleView = nil

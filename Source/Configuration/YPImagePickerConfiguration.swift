@@ -200,11 +200,29 @@ public struct YPConfigLibrary {
     public var preSelectItemOnMultipleSelection = true
 
     /// Anything superior than 1 will enable the multiple selection feature.
-    public var maxNumberOfItems = 1
+    public var maxNumberOfItemsType: YPMediaCount = .imageAndVideo(count: 5)
+    
+    public var maxNumberOfItems: Int {
+        switch YPConfig.library.maxNumberOfItemsType {
+        case .image(let count), .video(let count), .imageAndVideo(let count):
+            return count
+        case .imageOrVideo(let imageCount, let videoCount):
+            return max(imageCount, videoCount)
+        }
+    }
     
     /// Anything greater than 1 will desactivate live photo and video modes (library only) and
     /// force users to select at least the number of items defined.
-    public var minNumberOfItems = 1
+    public var minNumberOfItemsType: YPMediaCount = .imageAndVideo(count: 1)
+    
+    public var minNumberOfItems: Int {
+        switch YPConfig.library.minNumberOfItemsType {
+        case .image(let count), .video(let count), .imageAndVideo(let count):
+            return count
+        case .imageOrVideo(let imageCount, let videoCount):
+            return min(imageCount, videoCount)
+        }
+    }
 
     /// Set the number of items per row in collection view. Defaults to 4.
     public var numberOfItemsInRow: Int = 4

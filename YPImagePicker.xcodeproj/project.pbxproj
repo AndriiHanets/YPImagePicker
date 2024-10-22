@@ -58,6 +58,10 @@
 		AA69BCF222E601D100FBB925 /* YPDeviceOrientationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA69BCF122E601D100FBB925 /* YPDeviceOrientationHelper.swift */; };
 		BC00A24829FC176600A5DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC00A24729FC176600A5DBF8 /* ViewController.swift */; };
 		BC00A24929FC176600A5DBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC00A24729FC176600A5DBF8 /* ViewController.swift */; };
+		BC7BC9222C36B11100A7A012 /* YPVideoFiltersConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */; };
+		BC7BC9232C36B11100A7A012 /* YPVideoFiltersConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */; };
+		BCB476F52CC6B59100399F03 /* YPMediaCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB476F42CC6B59100399F03 /* YPMediaCount.swift */; };
+		BCB476F62CC6B59100399F03 /* YPMediaCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB476F42CC6B59100399F03 /* YPMediaCount.swift */; };
 		BCCCC1B3299289DB00678B48 /* CropMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B0299289DA00678B48 /* CropMaskView.swift */; };
 		BCCCC1B4299289DB00678B48 /* VideoCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B1299289DB00678B48 /* VideoCropView.swift */; };
 		BCCCC1B5299289DB00678B48 /* VideoScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1B2299289DB00678B48 /* VideoScrollView.swift */; };
@@ -283,6 +287,8 @@
 		99D1DC2A1F9788930047F0E0 /* YPImagePickerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPImagePickerConfiguration.swift; sourceTree = "<group>"; };
 		AA69BCF122E601D100FBB925 /* YPDeviceOrientationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPDeviceOrientationHelper.swift; sourceTree = "<group>"; };
 		BC00A24729FC176600A5DBF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPVideoFiltersConfiguration.swift; sourceTree = "<group>"; };
+		BCB476F42CC6B59100399F03 /* YPMediaCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPMediaCount.swift; sourceTree = "<group>"; };
 		BCCCC1B0299289DA00678B48 /* CropMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropMaskView.swift; sourceTree = "<group>"; };
 		BCCCC1B1299289DB00678B48 /* VideoCropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCropView.swift; sourceTree = "<group>"; };
 		BCCCC1B2299289DB00678B48 /* VideoScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoScrollView.swift; sourceTree = "<group>"; };
@@ -421,6 +427,8 @@
 				99019E502018CDED007325C2 /* YPImageSize.swift */,
 				99019E522018CE19007325C2 /* YPPickerScreen.swift */,
 				99472DEC2056E33700419F9E /* YPWordings.swift */,
+				BC7BC9212C36B11100A7A012 /* YPVideoFiltersConfiguration.swift */,
+				BCB476F42CC6B59100399F03 /* YPMediaCount.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -882,6 +890,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCB476F62CC6B59100399F03 /* YPMediaCount.swift in Sources */,
 				BCCCC1BD299289EC00678B48 /* PryntTrimmerView.swift in Sources */,
 				EB05F6E7214A7191002040AA /* YPVideoProcessor.swift in Sources */,
 				990FD293201B3D69002A39A1 /* YPLibraryViewDelegate.swift in Sources */,
@@ -1035,6 +1044,7 @@
 				EBA37B6C26F74CBA005DAAD4 /* YPAlbumsManager.swift in Sources */,
 				EBA37B9C26F74CBA005DAAD4 /* CGFloat+Extensions.swift in Sources */,
 				EBA37B7426F74CBA005DAAD4 /* YPVideoView.swift in Sources */,
+				BCB476F52CC6B59100399F03 /* YPMediaCount.swift in Sources */,
 				EBA37B8926F74CBA005DAAD4 /* YPAlerts.swift in Sources */,
 				EBA37B9526F74CBA005DAAD4 /* AVCaptureDevice+Extensions.swift in Sources */,
 				EBA37B9426F74CBA005DAAD4 /* YPAssetZoomableView.swift in Sources */,
