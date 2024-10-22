@@ -106,8 +106,8 @@ class ExampleViewController: UIViewController {
         config.library.minWidthForItem = nil
         config.library.mediaType = .photoAndVideo
         config.library.defaultMultipleSelection = true
-        config.library.maxNumberOfItemsType = .imageOrVideo(imageCount: 3, videoCount: 1)
-        config.library.minNumberOfItemsType = .imageOrVideo(imageCount: 3, videoCount: 1)
+        config.library.maxNumberOfItemsType = .imageOrVideo(imageCount: 35, videoCount: 1)
+        config.library.minNumberOfItemsType = .imageOrVideo(imageCount: 1, videoCount: 1)
         config.library.numberOfItemsInRow = 4
         config.library.spacingBetweenItems = 1.0
         config.library.skipSelectionsGallery = true

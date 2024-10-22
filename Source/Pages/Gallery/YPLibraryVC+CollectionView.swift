@@ -44,12 +44,12 @@ extension YPLibraryVC {
             let videoCount = selectedItems.filter { $0.isVideo }.count
             let imageCount = selectedItems.filter { !$0.isVideo }.count
             
-            var isValidImageCount = imageCount <= _imageCount && imageCount != 0
+            var isValidImageCount = imageCount >= _imageCount && imageCount != 0
             if imageCount > 0 {
                 isValidImageCount = isValidImageCount && videoCount == 0
             }
             
-            var isValidVideoCount = videoCount <= _videoCount && videoCount != 0
+            var isValidVideoCount = videoCount >= _videoCount && videoCount != 0
             if videoCount > 0 {
                 isValidVideoCount = isValidVideoCount && imageCount == 0
             }
